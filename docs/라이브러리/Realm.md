@@ -12,37 +12,34 @@
 - 이는 기존 쿼리문으로 테이블에 데이터를 읽어오던 DB와는 다른 방식으로 기존에 쓰던 데이터베이스들은 가져온 데이터를 바로 사용할 수 없고, 애플리케이션에서 사용이 가능하도록 가공하는 과정이 필요합니다. 이 과정이 잘못되면 코드가 복잡해지는 문제가 있습니다.
 - Realm은 객체 형태로 데이터를 읽어오고 객체 형태로써 바로 DB에 저장을 가능하게 함으로 위와 같은 문제를 해결한 솔루션이다.
 
+## 성능
+![f1](https://user-images.githubusercontent.com/45002556/108619724-0722ab00-746a-11eb-9210-d39838375a3e.png)
+
 ## 사용 방법
 - Realm은 객체 컨테이너로 동작하기 때문에 object를 새성해주어야 한다
+![f2](https://user-images.githubusercontent.com/45002556/108619726-08ec6e80-746a-11eb-8e71-4b4b37f23cb4.png)
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/55d34d55-81ec-45d9-bcc0-a05f33e03019/_2020-11-10__1.31.01.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/55d34d55-81ec-45d9-bcc0-a05f33e03019/_2020-11-10__1.31.01.png)
+    - class로 구성
+    - 각 변수 앞에 @objc dynamic을 적어준다
 
-    1. class로 구성
-    2. 각 변수 앞에 @objc dynamic을 적어준다
+- Realm 추가         
+![f3](https://user-images.githubusercontent.com/45002556/108619727-09850500-746a-11eb-8d3c-6923fe986039.png)
 
-- Realm 추가
+    - realm.write{realm.add(Object)}
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/356c0b94-002e-4d68-a312-e9546b7b6359/_2020-11-10__1.31.58.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/356c0b94-002e-4d68-a312-e9546b7b6359/_2020-11-10__1.31.58.png)
+- Realm 삭제       
+![f4](https://user-images.githubusercontent.com/45002556/108619728-0a1d9b80-746a-11eb-8f35-83221d71f1db.png)
+    - realm.write{realm.delete(Object)}
 
-    1. realm.write{realm.add(Object)}
+- Realm 업데이트        
+![f6](https://user-images.githubusercontent.com/45002556/108619729-0a1d9b80-746a-11eb-9d36-7243c8c891e3.png)
 
-- Realm 삭제
+    - Realm의 업데이트시 Object 객체는 데이터를 바로 반영하고 자동 업데이트하기 때문에 객체를 새로고침 할 필요가 없다. 한 객체의 속성을 고치면 동일 객체를 참조하는 다른 객체에도 즉각적으로 반영된다.
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/54e8fa46-3399-40ee-84e1-3d93a12f92ff/_2020-11-10__1.32.49.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/54e8fa46-3399-40ee-84e1-3d93a12f92ff/_2020-11-10__1.32.49.png)
+- Realm 조회      
+![f7](https://user-images.githubusercontent.com/45002556/108619730-0ab63200-746a-11eb-9d2f-6ca5df6fc649.png)
 
-    1. realm.write{realm.delete(Object)}
-
-- Realm 업데이트
-
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b6f4e830-aa23-4765-ae9b-bf42ed9e95a2/_2020-11-10__1.33.25.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b6f4e830-aa23-4765-ae9b-bf42ed9e95a2/_2020-11-10__1.33.25.png)
-
-    Realm의 업데이트시 Object 객체는 데이터를 바로 반영하고 자동 업데이트하기 때문에 객체를 새로고침 할 필요가 없다. 한 객체의 속성을 고치면 동일 객체를 참조하는 다른 객체에도 즉각적으로 반영된다.
-
-- Realm 조회
-
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/67e2579a-4e74-4b32-881e-adcb63acb488/_2020-11-10__1.34.54.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/67e2579a-4e74-4b32-881e-adcb63acb488/_2020-11-10__1.34.54.png)
-
-    Realm에 저장된 Object 형태로 저장되며 조회할 때도 저장된 Object의 값으로 불러올 수 있다. 정렬 및 필터를 이용해 데이터를 정리하여 호출 가능하다.
+    - Realm에 저장된 Object 형태로 저장되며 조회할 때도 저장된 Object의 값으로 불러올 수 있다. 정렬 및 필터를 이용해 데이터를 정리하여 호출 가능하다.
 
 - NotificationToken을 활용한 view update
 

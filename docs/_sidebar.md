@@ -7,7 +7,7 @@
     - [iOS 실제 화면 크기의 서브 뷰 추가](iOS/ios_view_size.md)
     - [available](iOS/available.md)
     - [Designated init vs convenience init](iOS/init.md)
-    - [segue](iOS/seuge.md)
+    - [segue](iOS/segue.md)
     - [class func vs static func](iOS/classVSstatic_func.md)
     - [navigationbar 설정](iOS/navigation.md)
     - [@discardableResult](iOS/discardableResult.md)

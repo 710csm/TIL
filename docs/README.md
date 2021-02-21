@@ -1,3 +1,3 @@
 # Headline
 
-> An awesome project.
+> iOS 및 Swift 공부 기록
