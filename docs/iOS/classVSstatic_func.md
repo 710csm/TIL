@@ -19,7 +19,7 @@ class Sample {
 
 static과 class 메소드는 타입 메소드라 불린다. 모두 class 객체보다는 class 자체와 연관되어 있습니다. () 생성자를 통해서 인스턴스를 생성하지 않더라도 접근이 가능하다
 
-```jsx
+```swift
 Sample.myClassFunc()
 Sample.myStaticFunc()
 ```

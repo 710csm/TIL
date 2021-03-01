@@ -4,7 +4,7 @@ try는 예외 상황을 다루기 위한 방법의 do ~ catch 문을 사용해�
 
 do와 catch 문을 모두 적어주지 않아도 간편히 에러처리 가능한 try?와 try!를 사용하는 것이 더 효과적입니다.
 
-```jsx
+```swift
 do {
     y = try someThrowingFunction()
 }catch {
@@ -22,7 +22,7 @@ do {
 
 do~catch문 없이 사용가능합니다.
 
-```jsx
+```swift
 if let data = try? getData(){
     return data
 }
@@ -36,6 +36,6 @@ if let data = try? getData(){
 
 예외가 발생하지 않는다는 것을 보장하고 해당 함수를 호출하는 것으로 보시면 됩니다.
 
-```jsx
+```swift
 let image = try! loadImg(atPath: "./Resources/mainLogo.jpg")
 ```

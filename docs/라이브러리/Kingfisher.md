@@ -1,0 +1,45 @@
+# Kingfisher
+이미지를 간편하게 사용할 수 있게 해주는 라이브러리       
+첫 다운로드 때 캐시에 저장해두기 때문에 이후에 다시 이미지를 로드 할 때  캐시에서 데이터를 가져오기 때문에 
+매우 빠른 속도로 받을 수 있다.     
+
+## 사용법
+cocoapod 설치      
+```swift
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '10.0'
+use_frameworks!
+
+target 'MyApp' do
+  pod 'Kingfisher', '~> 6.0'
+end
+```      
+
+기본 사용법       
+```swift
+import Kingfisher
+
+let url = URL(string: "https://example.com/image.png")
+imageView.kf.setImage(with: url)
+```
+
+옵션     
+```swift
+// 트랜지션 옵션
+imageView.kf.setImage(
+                    with: url, 
+                    options: [.transition(.fade(0.2))]
+                   )
+                   
+// 라운드 옵션
+let processor = RoundCornerImageProcessor(cornerRadius: 20)
+imageView.kf.setImage(
+                    with: url, 
+                    options: [.processor(processor)]
+                   )
+```
+
+## Kingfisher git 주소
+<img width="594" alt="스크린샷 2021-03-01 오후 5 32 50" src="https://user-images.githubusercontent.com/45002556/109471514-33ff3f80-7ab4-11eb-918a-9cd5f06313bb.png">
+
+https://github.com/onevcat/Kingfisher

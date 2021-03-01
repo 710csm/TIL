@@ -11,7 +11,7 @@
 --- 
 
 ## 기본 사용법     
-```jsx
+```swift
 Alamofire.request() //다른 모든 HTTP 요청은 파일 전송과 관련 없다
 Alamofire.uplod() //multipart, stream, file, data method를 사용하여 파일을 업로드
 Alamofire.download() //파일을 다운로드 하거나 이미 진행중인 다운로드를 다시 시작합니다
@@ -30,3 +30,9 @@ Alamofire.download() //파일을 다운로드 하거나 이미 진행중인 다�
 ## 정리
 - Alamofire란 iOS, macOS를 위한 Swift 기반의 HTTP 네트워킹 라이브러리이다
 - Alamofire는 URLSession 기반이며 URLSession은 네트워킹 호출에서 모호한 부분이 많은데 Alamofire를 사용한다면 데이터를 접근하기 위한 노력을 줄일 수 있으면 코드를 더 깔끔하고 가독성 있게 쓰는 것이 가능하다
+
+
+## Alamofire git 주소
+<img width="438" alt="스크린샷 2021-03-01 오후 5 41 05" src="https://user-images.githubusercontent.com/45002556/109472339-534a9c80-7ab5-11eb-9d85-fb194270e8e6.png">
+
+https://github.com/Alamofire/Alamofire

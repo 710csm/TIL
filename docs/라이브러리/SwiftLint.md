@@ -34,3 +34,6 @@ excluded:
 - smartlearning.iosTests
 - AppDelegate.swift
 - SceneDelegate.swift
+
+## SwiftLint git 주소     
+https://github.com/realm/SwiftLint

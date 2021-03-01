@@ -8,7 +8,7 @@ internal: 같은 모듈 또는 앱에서 접근 가능
 
 public: 어디서든 접근 가능
 
-**additional access cntrol**
+## additional access cntrol
 
 open: 외부 모듈  어디에서나 사용할 수 있을 뿐 아니라 외부에서 하위 분류하거나 오버라이드할 수 있다.
 
