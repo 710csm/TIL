@@ -5,9 +5,9 @@
 
 **네비게이션바 색깔**
 1. **tintColor**     
-    - navigation items와 bar button items에 적용되는 색깔
-    - ![f2](https://user-images.githubusercontent.com/45002556/108619394-ed806400-7467-11eb-9eeb-8316ae042e29.png)
-    - ![f3](https://user-images.githubusercontent.com/45002556/108619395-ef4a2780-7467-11eb-9443-73635813b3e7.png)
+    navigation items와 bar button items에 적용되는 색깔
+    ![f2](https://user-images.githubusercontent.com/45002556/108619394-ed806400-7467-11eb-9eeb-8316ae042e29.png)
+    ![f3](https://user-images.githubusercontent.com/45002556/108619395-ef4a2780-7467-11eb-9443-73635813b3e7.png)
 
     
 2. **barTintColor**    
