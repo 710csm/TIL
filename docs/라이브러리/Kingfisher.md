@@ -39,6 +39,28 @@ imageView.kf.setImage(
                    )
 ```
 
+퍼포먼스 향상 (캐슁)     
+```swift
+if let url = URL(string: cast.tec_img) {
+    let resource = ImageResource(downloadURL: url, cacheKey: cast.tec_img)
+    let processor = DownsamplingImageProcessor(size: tecImg.bounds.size)
+    tecImg.kf.setImage(
+        with: resource,
+        options: [
+            .transition(.fade(0.3)),
+            .processor(processor),
+            .scaleFactor(UIScreen.main.scale),
+            .cacheOriginalImage
+        ])
+}
+
+// 테이블 뷰 또는 콜렉션 뷰에 적용
+func tableView(_ tableView: UITableView,
+                              didEndDisplaying cell: UITableViewCell,
+                              forRowAt indexPath: IndexPath) {
+    cell.imageView?.kf.cancelDownloadTask()
+}
+```
 ## Kingfisher git 주소
 <img width="594" alt="스크린샷 2021-03-01 오후 5 32 50" src="https://user-images.githubusercontent.com/45002556/109471514-33ff3f80-7ab4-11eb-918a-9cd5f06313bb.png">
 
