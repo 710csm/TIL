@@ -115,3 +115,6 @@ Swift에서 함수는 일급 시민으로 취급되기 때문에 다른 함수�
 ![reduce1](https://user-images.githubusercontent.com/45002556/108618634-020e2d80-7463-11eb-9526-e29a60ca680e.png)
 
 ![reduce2](https://user-images.githubusercontent.com/45002556/108618635-03d7f100-7463-11eb-9dab-c625b22b9c4e.png)
+      
+map, filter, reduce vs for in loop 비교
+https://www.skoumal.com/en/performance-of-built-in-higher-order-functions-map-filter-reduce-and-flatmap-vs-for-in-loop-in-swift/
