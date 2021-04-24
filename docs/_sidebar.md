@@ -16,6 +16,7 @@
     - [UIKeyCommands](iOS/keyCommands.md)
     - [associatedType](iOS/associatedType.md)
     - [RxSwift/RxCocoa](iOS/RxSwift.md)
+    - [Localization](iOS/Localizing.md)
 
 - 라이브러리
     - [Alamofire](라이브러리/Alamofire.md)
