@@ -58,7 +58,6 @@
 1. 개념
     - RxCocoa란 "UIKit 및 Cocoa 개발을 지원하는 클래스"를 보유하고 있는 RxSwift 동반 라이브러리 
     - 다양한 UI 구성요소에 대한 반응형 확장(reactive extensions) 기능을 추가하여 UI 이벤트를 추가 가능
-    
 
 # Observables
 - Observable이란 여러 이벤트들을 생성(emit)할 수 있는 대상
@@ -83,7 +82,6 @@
 - [one, two, three] 처럼 하나의 배열로도 삽입 가능    
 
 ```swift
-
 // 1
 let one = 1
 let two = 2
@@ -115,7 +113,6 @@ let observable = Observable.from([one, two, three])
 4. Observable.create(): 클로저 형식이며 다양한(onNext, onCompleted, ...)을 생성할 수 있음 
 
 ```swift
-
 let disposeBag = DisposeBag()
 let observable = Observable<String>.create({ (observer) -> Disposable in
     observer.onNext("1")
@@ -133,7 +130,6 @@ prints
 next(1)
 completed
 */
-
 ```
 
 # Observable subscribing
@@ -143,7 +139,6 @@ completed
 - 사전 작업: Observable에 요소 추가
 
 ```swift
-
 let one = 1
 let two = 2
 let three = 3
@@ -206,31 +201,24 @@ Completed
 - subscribe() 시, "completed"도 출력되지 않음
 
 ```swift
-     let observable = Observable<Any>.never()
-     observable
-         .subscribe(
-             onNext: { (element) in
-                 print(element)
-         },
-             onCompleted: {
-                 print("Completed")
-         }
-     )
+let observable = Observable<Any>.never()
+observable.subscribe( onNext: { (element) in
+    print(element)
+}, onCompleted: {
+    print("Completed")
+})
 ```
 
 5. range()로 설정된 Observable
 - 클로저에서 인수를 주목"(i) in "
 
 ```swift
-
 let observable = Observable<Int>.range(start: 1, count: 10)
-
 observable.subscribe(onNext: { (i) in
     let n = Double(i)
     let fibonacci = Int(((pow(1.61803, n) - pow(0.61803, n)) / 2.23606).rounded())
     print(fibonacci)
 })
-
 ```
 
 ## disposing
@@ -284,11 +272,11 @@ Observable<String>.create({ (observer) -> Disposable in
 ).disposed(by: disposeBag) // 이 구문이 있는 이유 : 메로리 제거함으로써 메모리 효율확보
     
     
- /* Prints:
-  1
-  anError
-  Disposed
- */
+/* Prints:
+1
+anError
+Disposed
+*/
 ```
 - 코드의 흐름: 동기가 아닌 비동기이므로 주의 
 
@@ -307,8 +295,7 @@ let subject = PublishSubject<String>()
 subject.onNext("Is anyone listening?")
 
 // 첫 번째 구독 요청
-let subscriptionOne = subject
-.subscribe(onNext: { (string) in
+let subscriptionOne = subject.subscribe(onNext: { (string) in
     print(string)
 })
 
@@ -381,7 +368,6 @@ subject.subscribe {
 }
 .disposed(by: disposeBag)
 // print : 2) error(anError)
-
 ```
 - BehaviorSubject는 초기화 값이 필수이며, 항상 저장되어있는 최신값을 emit
 - BehaviorSubject사용: 뷰를 가장 최신의 데이터로 미리 채우기에 용이 (유저 프로필 화면을 BehaviorSubject에 바인딩)
@@ -390,7 +376,6 @@ subject.subscribe {
 <img width="697" alt="스크린샷 2021-04-10 오후 3 53 05" src="https://user-images.githubusercontent.com/45002556/114261319-d811ca00-9a14-11eb-8fec-967cd0ed3b63.png">
 
 ```swift
-
 let subject = ReplaySubject<String>.create(bufferSize: 2)
 let disposeBag = DisposeBag()
 
@@ -416,7 +401,6 @@ subject.subscribe {
 2) next(3)
 */
 
-
 subject.onNext("4")
 /* prints
 1) next(4)
@@ -439,7 +423,6 @@ subject.subscribe {
 3) next(4)
 3) error(anError)
 */
-
 ```
 
 4. PublishRelay, BehaviorRelay: 오직 .next 이벤트만 emit 함 (.completed, .error 무시, non-terminating에서 유용하게 사용)
@@ -549,7 +532,6 @@ override func viewDidLoad() {
         print(error)
     }).disposed(by: disposeBag)    
 }
-
 
 func setTableViewItem(_ item: BehaviorRelay<[Data]>) {
     items.bind(
