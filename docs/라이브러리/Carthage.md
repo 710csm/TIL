@@ -45,6 +45,9 @@ carthage update --use-scframeworks
 7. simulator 에러시
 - Build Setting -> build option에 있는 Vaildate workspace 를 yes로 변경
 
+8. gitignore
+- Carthage 폴더 추가 필수, 안하면 git에 대량의 파일들이 업로드된다..
+
 
 ## 참고 사이트
 1. [우아한형제들 기술 블로그](https://woowabros.github.io/experience/2020/07/06/thiiing-ios.html)
