@@ -29,6 +29,8 @@ github "SwiftyJSON/SwiftyJSON" ~> 4.0
 carthage update
 // option: iOS와 관련된것만 설치
 carthage update --platform iOS
+// 빌드 에러시
+carthage update --use-scframeworks
 ```
 
 5. 프로젝트에 라이브러리 연결
@@ -36,6 +38,12 @@ carthage update --platform iOS
     
 6. Build Phase에 run script 명령어 추가
 <img width="977" alt="스크린샷 2021-04-25 오후 6 06 37" src="https://user-images.githubusercontent.com/45002556/115987669-071d6380-a5f1-11eb-8568-a32386f9af92.png">
+
+- /usr/local/bin/carthage copy-frameworks
+- $(SRCROOT)/Carthage/Build/iOS/라이브러리명.framework
+
+7. simulator 에러시
+- Build Setting -> build option에 있는 Vaildate workspace 를 yes로 변경
 
 
 ## 참고 사이트
