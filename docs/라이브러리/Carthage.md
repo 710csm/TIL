@@ -30,7 +30,7 @@ carthage update
 // option: iOS와 관련된것만 설치
 carthage update --platform iOS
 // 빌드 에러시
-carthage update --use-scframeworks
+carthage update --use-xcframeworks
 ```
 
 5. 프로젝트에 라이브러리 연결
