@@ -1,0 +1,173 @@
+# iOS Study
+
+## for문
+1. 일반적인 사용법
+
+```swift
+let arr = [1,2,3,4,5,6,7,8,9,10]
+
+for i in arr {
+    if i % 2 == 0 {
+        print(i)
+    }
+}
+```
+
+2. where 문을 사용했을 때
+
+```swift
+for i in arr where i % 2 == 0{
+    print(i)
+}
+```
+
+- depth가 깊지 않게 코드를 작성할 수 있다(가독성이 좋아진다) 
+
+3. forEach
+
+```swift
+arr.forEach {
+    print($0)
+}
+```
+- closure 방식
+
+4. enumerate
+
+```swift
+let dict = [
+    [1: "apple"],
+    [2: "banana"],
+    [3: "grape"],
+    [4: "watermelon"],
+]
+
+for (key, value) in dict.enumerated() {
+    print("key: \(key)")
+    print("value: \(value)")
+}
+```
+
+## 조건문
+1. 스위프트에서는 조건문의 괄호를 제거해도 된다(권장)
+
+```swift
+// 1번
+if (flag) {
+    print("true")
+}
+// 2번
+if flag {
+    print("true")
+}
+
+// 3번
+if (flag && (num1 == num2)) {
+    print("true")
+}
+// 4번
+if flag && (num1 == num2) {
+    print("true")
+}
+```
+- 여러개의 조건을 썻을 때 가독성이 좋아진다
+
+2. ,(콤마)로 조건문 표현
+
+```swift
+// 1번
+if flag1 && flag2 {...}
+
+// 2번
+if flag1, flag2 {...}
+```
+- 두 조건문의 의미는 똑같지만 2번 조건문은 앞에 조건(flag1)이 false일 경우 뒤에 있는 조건문은 건너뛸 수 있다.(속도 향상)
+
+## switch문
+1. 조건문과 똑같이 괄호 생략 가능
+
+```swift
+// 1번
+switch (value) {
+case pattern:
+    code
+default:
+    code
+}
+
+// 2번
+switch value {
+case pattern:
+    code
+default:
+    code
+}
+```
+
+2. break를 안적어도 된다
+
+```swift
+switch grade {
+case "A":
+    print("A")
+    break
+case "B":
+    print("B")
+    break
+case "C":
+    print("C")
+    break
+default: 
+    print("D")
+    break
+}
+
+switch grade {
+case "A":
+    print("A")
+case "B":
+    print("B")
+case "C":
+    print("C")
+default: 
+    print("D")
+}
+```
+
+3. case에 여러 패턴을 명시할 수 있다
+
+```swift
+switch grade {
+case "A", "B":
+    print("A and B")
+case "C", "D":
+    print("C and D")
+case "E", "F":
+    print("E and F")
+default:
+    break
+}
+```
+
+4. if 문과 비교
+
+```swift
+if grade == "A" {
+    print("A")
+} else if grade == "B" {
+    print("B")
+} else if grade == "C" {
+    print("C")
+} else {
+    print("D")
+}
+    
+switch grade {
+case "A":
+    print("A")
+case "B":
+    print("B")
+case "C":
+    print("C")
+```
+- 조건이 3개 이상부터는  switch문의 성능이 더  좋다
