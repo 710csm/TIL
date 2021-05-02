@@ -47,7 +47,7 @@ for (key, value) in dict.enumerated() {
     print("value: \(value)")
 }
 ```
-
+---
 ## 조건문
 1. 스위프트에서는 조건문의 괄호를 제거해도 된다(권장)
 
@@ -82,7 +82,7 @@ if flag1 && flag2 {...}
 if flag1, flag2 {...}
 ```
 - 두 조건문의 의미는 똑같지만 2번 조건문은 앞에 조건(flag1)이 false일 경우 뒤에 있는 조건문은 건너뛸 수 있다.(속도 향상)
-
+---
 ## switch문
 1. 조건문과 똑같이 괄호 생략 가능
 
@@ -171,3 +171,48 @@ case "C":
     print("C")
 ```
 - 조건이 3개 이상부터는  switch문의 성능이 더  좋다
+---
+## 배열
+```swift
+// 1번
+let arr1 = Array<String>()
+// 2번
+let arr2 = [String]()
+```
+- 2번 코드가 더 권장되는 코드
+---
+## guard let, if let
+- optional 값을 사용할 때 안전하게 사용할 수 있도록 해준다
+
+```swift
+var value: Int?
+value = 1
+
+// 1번
+func test1() {
+    print("value: \(value!)")
+    
+    print("value: \(value ?? 0)")
+}
+
+// 2번 guard let
+func test2() {
+    guard let value = value else {
+        print("value is empty")
+        return
+    }
+    print(value)
+}
+
+// 3번 if let
+func test3() {
+    if let value = value {
+        print(value)
+    } else {
+        print("value is empty")
+    }
+}
+```
+- 1번 방법과 같이 사용하면 컴파일 에러가 날 수 있다.
+- 코드에 !가 많으면 좋지 않다.
+- guard let 을 사용할 경우 if 와 다르게 괄호 밖에서도 값을 사용할 수 있다.
