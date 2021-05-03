@@ -1,4 +1,4 @@
-# iOS Study
+# iOS 스터디
 
 ## for문
 1. 일반적인 사용법
@@ -16,7 +16,7 @@ for i in arr {
 2. where 문을 사용했을 때
 
 ```swift
-for i in arr where i % 2 == 0{
+for i in arr where i % 2 == 0 {
     print(i)
 }
 ```
@@ -139,11 +139,9 @@ default:
 ```swift
 switch grade {
 case "A", "B":
-    print("A and B")
-case "C", "D":
-    print("C and D")
-case "E", "F":
-    print("E and F")
+    print("A, B")
+case "C", "D", "E", "F":
+    print("C, D, E, F")
 default:
     break
 }
@@ -216,3 +214,53 @@ func test3() {
 - 1번 방법과 같이 사용하면 컴파일 에러가 날 수 있다.
 - 코드에 !가 많으면 좋지 않다.
 - guard let 을 사용할 경우 if 와 다르게 괄호 밖에서도 값을 사용할 수 있다.
+---
+## _의 의미
+1. 값을 받아서 사용하지 않을 때 사용
+
+```swift
+guard let _ = value else {
+    return
+}
+
+let _ = sumNum(1,2)
+```
+
+2. 함수 호출시 파라미터의 이름을 생략할 때 사용
+
+```swift
+// 1번
+func underbarTest(name: String, age: Int) {
+    print("name: \(name), age: \(age)")
+}
+underbarTest(name: "Example", age: 10)
+
+// 2번
+func underbarTest(_ name: String, _ age: Int) {
+    print("name: \(name), age: \(age)")
+}
+underbarTest("Example", 10)
+```
+---
+## 함수
+1. 여러개의 값을 리턴할 수 있다.
+
+```swift
+func printAvg(num1: Int, num2: Int, num3: Int) -> (total: Int, avg: Int) {
+    let total = num1 + num2 + num3
+    let avg = total/3
+    return (total, avg)
+}
+```
+
+2. 여러개의 인자를 받을 수 있다.
+
+```swift
+func arithmeticMean(_ numbers: Double...) -> Double {
+    var total: Double = 0
+    for number in numbers {
+        total += number
+    }
+    return total / Double(numbers.count)
+}
+```
