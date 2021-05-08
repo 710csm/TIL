@@ -47,7 +47,9 @@ for (key, value) in dict.enumerated() {
     print("value: \(value)")
 }
 ```
+
 ---
+
 ## 조건문
 1. 스위프트에서는 조건문의 괄호를 제거해도 된다(권장)
 
@@ -82,7 +84,9 @@ if flag1 && flag2 {...}
 if flag1, flag2 {...}
 ```
 - 두 조건문의 의미는 똑같지만 2번 조건문은 앞에 조건(flag1)이 false일 경우 뒤에 있는 조건문은 건너뛸 수 있다.(속도 향상)
+
 ---
+
 ## switch문
 1. 조건문과 똑같이 괄호 생략 가능
 
@@ -169,7 +173,9 @@ case "C":
     print("C")
 ```
 - 조건이 3개 이상부터는  switch문의 성능이 더  좋다
+
 ---
+
 ## 배열
 ```swift
 // 1번
@@ -178,7 +184,9 @@ let arr1 = Array<String>()
 let arr2 = [String]()
 ```
 - 2번 코드가 더 권장되는 코드
+
 ---
+
 ## guard let, if let
 - optional 값을 사용할 때 안전하게 사용할 수 있도록 해준다
 
@@ -214,7 +222,9 @@ func test3() {
 - 1번 방법과 같이 사용하면 컴파일 에러가 날 수 있다.
 - 코드에 !가 많으면 좋지 않다.
 - guard let 을 사용할 경우 if 와 다르게 괄호 밖에서도 값을 사용할 수 있다.
+
 ---
+
 ## _의 의미
 1. 값을 받아서 사용하지 않을 때 사용
 
@@ -241,7 +251,9 @@ func underbarTest(_ name: String, _ age: Int) {
 }
 underbarTest("Example", 10)
 ```
+
 ---
+
 ## 함수
 1. 여러개의 값을 리턴할 수 있다.
 
@@ -264,3 +276,219 @@ func arithmeticMean(_ numbers: Double...) -> Double {
     return total / Double(numbers.count)
 }
 ```
+---
+
+## class func vs static func
+
+1. 두개 다 똑같이 객체를 생성하지 않고 호출할 수 있다.
+
+```swift
+class MyClass {
+    static func test1() {
+        print("static func")
+    }
+    
+    class func test2() {
+        print("class func")
+    }
+}
+
+class SubClass {
+    func printSomething() {
+        MyClass.test1()
+        MyClass.test2()
+    }
+}
+```
+
+
+2. 상속에서의 차이
+
+<img width="772" alt="스크린샷 2021-05-08 오후 5 24 19" src="https://user-images.githubusercontent.com/45002556/117532377-3a64e700-b022-11eb-918c-e433281e517a.png">
+
+---
+
+## Performance of Map, Filter, Reduce vs for-in loop in Swift
+### 1. for 문과 map의 성능 비교
+
+```swift
+// Map
+let celsius = fahrenheit.map { (degreesFahrenheit) -> Double in
+    return (degreesFahrenheit - 32.0) / 1.8
+}
+
+// For-in loop
+var celsius = [Double]()
+for degreesFahrenheit in fahrenheit {
+    celsius.append((degreesFahrenheit - 32.0) / 1.8)
+}
+```
+
+<img width="618" alt="스크린샷 2021-05-08 오후 4 54 58" src="https://user-images.githubusercontent.com/45002556/117531594-21f2cd80-b01e-11eb-907e-0ee25c6ecf52.png">
+- map의 성능이 더 좋은것을 알 수 있다.
+
+### 2. for 문과 filter의 성능 비교
+
+```swift
+// filter
+let colds = fahrenheit.filter { (degreesFahrenheit) -> Bool in
+    return degreesFahrenheit <= 68.0
+}
+
+// For-in loop
+var colds = [Double]()     
+for degreesFahrenheit in fahrenheit {
+    if degreesFahrenheit <= 68.0 {
+        colds.append(degreesFahrenheit)
+    }
+}
+```
+<img width="632" alt="스크린샷 2021-05-08 오후 4 56 50" src="https://user-images.githubusercontent.com/45002556/117531630-641c0f00-b01e-11eb-9764-e9ac5fdc1aa7.png">
+- filter의 성능이 좀 더 좋은것을 알 수 있다.
+
+### 3. for 문과 reduce의 성능 비교
+
+```Swift
+// reduce
+let sum = fahrenheit.reduce(0.0) { (result, degreesFahrenheit) -> Double in
+    return result + degreesFahrenheit
+}
+
+
+// For-in loop
+var sum: Double = 0.0
+        
+for degreesFahrenheit in fahrenheit {
+    sum += degreesFahrenheit
+}
+```
+
+<img width="632" alt="스크린샷 2021-05-08 오후 4 59 44" src="https://user-images.githubusercontent.com/45002556/117531706-cb39c380-b01e-11eb-92d9-493c55185afe.png">
+- reduce의 성능은 for문보다 좋지 않다
+
+### 4. 함수 chaining (map + filter + reduce)의 성능
+
+```Swift
+// map + filter + reduce
+let sum = fahrenheit.map({ (degreesFahrenheit) -> Double in
+    return (degreesFahrenheit - 32.0) / 1.8
+}).filter({ (degreesCelsius) -> Bool in
+    return degreesCelsius <= 20.0
+}).reduce(0.0) { (result, degreesCelsius) -> Double in
+    return result + degreesCelsius
+}
+
+// For-in loop
+var sum: Double = 0.0
+        
+for degreesFahrenheit in fahrenheit {
+    let degreesCelsius = (degreesFahrenheit - 32.0) / 1.8
+    if degreesCelsius <= 20.0 {
+        sum += degreesCelsius
+    }
+}
+```
+
+<img width="649" alt="스크린샷 2021-05-08 오후 5 03 43" src="https://user-images.githubusercontent.com/45002556/117531790-5a46db80-b01f-11eb-8027-04344d81f0ed.png">
+
+- for 문이 성능이 더 좋다
+- 이전 함수의 각 결과에 대해 반복돼서 for 문보다 성능이 좋지 않다.
+- map의 시간 복잡도 = O(n), filter의 시간 복잡도 = O(n), reduce의 시간 복잡도 = O(n)이기 때문에 3개의 시간 복잡도는 O(3n)
+
+### 5. RxSwift에서의 함수 Chaining 성능
+
+```Swift
+Observable.from(fahrenheit)
+    .map({ (degreesFahrenheit) -> Double in
+        return (degreesFahrenheit - 32.0) / 1.8
+    })
+    .filter({ (degreesCelsius) -> Bool in
+        return degreesCelsius <= 20.0
+    })
+    .reduce(0.0, accumulator: ({ (result, degreesCelsius) -> Double in
+        return result + degreesCelsius
+    }))
+    .subscribe(onNext: { sum in
+        print(sum)
+    })
+    .disposed(by: disposeBag)
+```
+
+<img width="635" alt="스크린샷 2021-05-08 오후 5 12 05" src="https://user-images.githubusercontent.com/45002556/117532044-857dfa80-b020-11eb-8686-8961b8ed675e.png">
+- 성능이 매우 좋지 않다는것을 확인할 수 있다.
+
+---
+
+## 프로퍼티 get, set, didSet, willSet
+
+### 1. 기본적인 사용법
+```Swift
+public var someValue: Int {
+    get {
+        return someValue
+    }
+    set(newValue) {
+        someValue = newValue
+    }
+}
+```
+<img width="777" alt="스크린샷 2021-05-08 오후 6 09 14" src="https://user-images.githubusercontent.com/45002556/117533572-81ee7180-b028-11eb-9076-757c57e14e1c.png">
+
+- 위와 같이 경고나 표시되는것을 확인할 수 있다.
+
+### 2. 올바른 사용법
+```Swift
+private var realValue: Int = 0
+public var tempValue: Int {
+    get {
+        return realValue
+    }
+    set(newValue) {
+        realValue = newValue
+    }
+}
+```
+- 프로퍼티에 값이 할당 될 때 적절한 값인지 검증하기 위해
+- 다른 프로퍼티 값에 의존적인 프로퍼티를 관리할 때
+- 프로퍼티를 private하게 사용하기 위해
+
+### 3. 응용
+```Swift
+private var realValue: Int = 0
+public var tempValue: Int {
+    get {
+        return realValue
+    }
+    set(newValue) {
+        if newValue < 1 {
+            print("값은 1보다 작을 수 없습니다.")
+        } else {
+            realValue = newValue
+        }
+    }
+}
+```
+
+### 4. didSet, willSet
+- 스위프트는 프로퍼티 옵저버로 didSet, willSet을 제공한다. 값이 변경되기 직전, 직후를 감지
+- 따라서 이때 원하는 작업을 수행 할 수 있습니다. 기본적인 syntax는 다음과 같다.
+
+```Swift
+var someValue: Int = 10 {
+   didSet(oldVal) {
+      //someValue의 값이 변경된 직후에 호출, oldVal은 변경 전 someValue의 값
+   }
+   willSet(newVal) {
+      //someValue의 값이 변경되기 직전에 호출, newVal은 변경 될 새로운 값
+   }
+}
+```
+### 5. 응용
+
+```Swift
+var score: Int = 0 {
+   didSet {
+      scoreLabel.text = "Score: \(score)"
+   }
+```
+- 값이 변경되고 ui에 변경된 값을 적용할 때 사용할 수 있다.
