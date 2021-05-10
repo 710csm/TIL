@@ -276,6 +276,105 @@ func arithmeticMean(_ numbers: Double...) -> Double {
     return total / Double(numbers.count)
 }
 ```
+
+3. 읽는 방법
+- 함수타입은 일반적으로 right-associative 
+- Int -> Int -> Int == Int -> (Int -> Int)
+
+```Swift
+func stock(_ money: Int) -> Int {
+    return money - 1
+}
+
+func bitcoin(_ money: Int) -> Int {
+    return money - 2
+}
+
+func investment(highRisk: Bool) -> (Int) -> Int {
+    return highRisk ? bitcoin : stock
+}
+
+let myChoice = investment(highRisk: true)
+let currentMoney = 3
+print(myChoice(currentMoney))
+```
+
+---
+
+## 프로퍼티 get, set, didSet, willSet
+
+### 1. 기본적인 사용법
+```Swift
+public var someValue: Int {
+    get {
+        return someValue
+    }
+    set(newValue) {
+        someValue = newValue
+    }
+}
+```
+<img width="777" alt="스크린샷 2021-05-08 오후 6 09 14" src="https://user-images.githubusercontent.com/45002556/117533572-81ee7180-b028-11eb-9076-757c57e14e1c.png">
+
+- 위와 같이 경고나 표시되는것을 확인할 수 있다.
+
+### 2. 올바른 사용법
+```Swift
+private var realValue: Int = 0
+public var tempValue: Int {
+    get {
+        return realValue
+    }
+    set(newValue) {
+        realValue = newValue
+    }
+}
+```
+- 프로퍼티에 값이 할당 될 때 적절한 값인지 검증하기 위해
+- 다른 프로퍼티 값에 의존적인 프로퍼티를 관리할 때
+- 프로퍼티를 private하게 사용하기 위해
+
+### 3. 응용
+```Swift
+private var realValue: Int = 0
+public var tempValue: Int {
+    get {
+        return realValue
+    }
+    set(newValue) {
+        if newValue < 1 {
+            print("값은 1보다 작을 수 없습니다.")
+        } else {
+            realValue = newValue
+        }
+    }
+}
+```
+
+### 4. didSet, willSet
+- 스위프트는 프로퍼티 옵저버로 didSet, willSet을 제공한다. 값이 변경되기 직전, 직후를 감지
+- 따라서 이때 원하는 작업을 수행 할 수 있습니다. 기본적인 syntax는 다음과 같다.
+
+```Swift
+var someValue: Int = 10 {
+   didSet(oldVal) {
+      //someValue의 값이 변경된 직후에 호출, oldVal은 변경 전 someValue의 값
+   }
+   willSet(newVal) {
+      //someValue의 값이 변경되기 직전에 호출, newVal은 변경 될 새로운 값
+   }
+}
+```
+### 5. 응용
+
+```Swift
+var score: Int = 0 {
+   didSet {
+      scoreLabel.text = "Score: \(score)"
+   }
+```
+- 값이 변경되고 ui에 변경된 값을 적용할 때 사용할 수 있다.
+
 ---
 
 ## class func vs static func
@@ -419,76 +518,76 @@ Observable.from(fahrenheit)
 
 ---
 
-## 프로퍼티 get, set, didSet, willSet
+## Closure
+### 1. 기본적인 Closure
 
-### 1. 기본적인 사용법
 ```Swift
-public var someValue: Int {
-    get {
-        return someValue
-    }
-    set(newValue) {
-        someValue = newValue
+{ (매개변수 목록) -> 반환타입 in
+    실행 코드
+}
+
+let sum: (Int, Int) -> Int = { (num1: Int, num2: Int) in
+    return num1 + num2
+}
+
+let sumResult: Int = sum(1, 2)
+print(sumResult)
+```
+
+### 2. Trailing Closures
+- Closure 표현식을 함수의 인자들 중 마지막 인자로 호출하여 넘길때 사용한다. 
+- 마지막 인자 라벨은 사용하지 않는다. Closure 표현식이 길 때 유용하다.
+- 함수에서 여러 후행 클로저가 올때, 첫번째 인자 라벨은 생략하지만, 나머지 클로저들은 인자라벨을 남겨둔다
+
+```Swift
+func loadPicture(from server: Server, completion: (Picture) -> Void, onFailure: () -> Void) {
+    if let picture = download("photo.jpg", from: server) { 
+        completion(picture)
+    } else {
+        onFailure() 
     }
 }
-```
-<img width="777" alt="스크린샷 2021-05-08 오후 6 09 14" src="https://user-images.githubusercontent.com/45002556/117533572-81ee7180-b028-11eb-9076-757c57e14e1c.png">
 
-- 위와 같이 경고나 표시되는것을 확인할 수 있다.
-
-### 2. 올바른 사용법
-```Swift
-private var realValue: Int = 0
-public var tempValue: Int {
-    get {
-        return realValue
-    }
-    set(newValue) {
-        realValue = newValue
-    }
+loadPicture(from: someServer) { picture in 
+    someView.currentPicture = picture
+} onFailure: {
+    print("Couldn't download the next picture.") ß
 }
 ```
-- 프로퍼티에 값이 할당 될 때 적절한 값인지 검증하기 위해
-- 다른 프로퍼티 값에 의존적인 프로퍼티를 관리할 때
-- 프로퍼티를 private하게 사용하기 위해
 
-### 3. 응용
+- 함수의 파라미터가 클로저 1개만 제공 되면 함수 뒤의 괄호를 생략할 수 있음
+
 ```Swift
-private var realValue: Int = 0
-public var tempValue: Int {
-    get {
-        return realValue
-    }
-    set(newValue) {
-        if newValue < 1 {
-            print("값은 1보다 작을 수 없습니다.")
-        } else {
-            realValue = newValue
+func someClosure(completion: () -> Void) {
+    print("someClosure")
+}
+
+someClosure {
+    // do somethins
+}
+```
+
+### 3. Escaping Closures
+- 클로저를 함수의 파라미터로 넣을 수 있는데, 함수가 끝나고 실행되는 클로저이다.
+- 비동기로 실행되거나 completionHandler로 사용되는 클로저는 파라미터 타입 앞에 @escaping이라는 키워드를 명시해야 한다.
+- - @escaping 를 사용하는 클로저에서는 self를 명시적으로 언급해야 한다.
+```Swift
+class SomeClass {
+    var x = 10
+    
+    func doSomething() {
+        // 클로저 안의 self가 class의 instance를 참조하면 강한 참조 사이클을 유발할 수 있다.
+        withEscapingClosure {
+            self.x = 100
+        }
+        // self implicity
+        withNonescapingClosure {
+            x = 200
         }
     }
 }
 ```
 
-### 4. didSet, willSet
-- 스위프트는 프로퍼티 옵저버로 didSet, willSet을 제공한다. 값이 변경되기 직전, 직후를 감지
-- 따라서 이때 원하는 작업을 수행 할 수 있습니다. 기본적인 syntax는 다음과 같다.
+- 위 함수에서 인자로 전달된 completionHandler는 someFunctionWithEscapingClosure 함수가 끝나고 나중에 처리 된다. 만약 함수가 끝나고 실행되는 클로저에 @escaping 키워드를 붙이지 않으면 컴파일시 오류가 발생.
 
-```Swift
-var someValue: Int = 10 {
-   didSet(oldVal) {
-      //someValue의 값이 변경된 직후에 호출, oldVal은 변경 전 someValue의 값
-   }
-   willSet(newVal) {
-      //someValue의 값이 변경되기 직전에 호출, newVal은 변경 될 새로운 값
-   }
-}
-```
-### 5. 응용
 
-```Swift
-var score: Int = 0 {
-   didSet {
-      scoreLabel.text = "Score: \(score)"
-   }
-```
-- 값이 변경되고 ui에 변경된 값을 적용할 때 사용할 수 있다.
