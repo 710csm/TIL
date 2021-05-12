@@ -590,4 +590,7 @@ class SomeClass {
 
 - 위 함수에서 인자로 전달된 completionHandler는 someFunctionWithEscapingClosure 함수가 끝나고 나중에 처리 된다. 만약 함수가 끝나고 실행되는 클로저에 @escaping 키워드를 붙이지 않으면 컴파일시 오류가 발생.
 
+---
 
+## UserDefault
+- 로컬 데이터 베이스
