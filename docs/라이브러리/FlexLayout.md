@@ -71,7 +71,114 @@ The same results can also be obtained without using the define() method, but the
   rowContainer.flex.addItem(priceLabel)
   columnContainer.flex.addItem(rowContainer)
 ```
-  
+
+**4. layout()**
+- Applies to: flex containers
+-  Values: fitContainer / adjustWidth / adjustHeight
+-  Default value: fitContainer
+**Method:**
+- layout(mode: LayoutMode = . fitContainer)
+- The method will layout the flex container's children.
+
+Layout modes:
+
+- fitContainer: This is the default mode when no parameter is specified. Children are layouted inside the container's size (width and height).
+- adjustHeight : In this mode, children are layouted using only the container's width. The container's height will be adjusted to fit the flexbox's children
+- adjustWidth : In this mode, children are layouted using only the container's height. The container's width will be adjusted to fit the flexbox's children
+**Example:**
+
+```swift
+rootFlexContainer.flex.layout(mode: .adjustHeight)
+```
+
+### Flexbox containers properties
+**1. direction()**
+- Applies to: flex containers
+- Values: column / columnReverse / row / rowReverse
+- Default value: column
+- CSS name: flex-direction
+**Method:**
+- direction(_: Direction)
+
+<img width="602" alt="스크린샷 2021-05-14 오후 3 47 59" src="https://user-images.githubusercontent.com/45002556/118232593-c3b96500-b4cb-11eb-9295-831ea3742628.png">
+
+**Example:**
+
+```swift
+view.flex.direction(.column)  // Not required, default value. 
+view.flex.direction(.row)
+```
+
+**2. justifyContent()**
+- Applies to: flex containers
+- Values: start / end / center / spaceBetween / spaceAround / spaceEvenly
+- Default value: start
+- CSS name: justify-content
+**Method:**
+- justifyContent(_: JustifyContent)
+
+<img width="853" alt="스크린샷 2021-05-14 오후 3 49 50" src="https://user-images.githubusercontent.com/45002556/118232781-0713d380-b4cc-11eb-87c6-838e05be44f9.png">
+
+**Example:**
+
+```swift
+view.flex.justifyContent(.start)  // default value. 
+view.flex.justifyContent(.center)
+```
+
+**3. alignItems()**
+- Applies to: flex containers
+- Values: stretch / start / end / center / baseline
+- Default value: stretch
+- CSS name: align-items
+**Method:**
+- alignItems(_: AlignItems)
+
+<img width="523" alt="스크린샷 2021-05-14 오후 3 51 26" src="https://user-images.githubusercontent.com/45002556/118232954-3f1b1680-b4cc-11eb-9d7d-5dc90f6f534e.png">
+
+**4. alignSelf()**
+- Applies to: flex containers
+- Values: auto / stretch / start / end / center / baseline
+- Default value: auto
+- CSS name: align-self
+**Method:**
+- alignSelf(_: AlignSelf)
+
+**5. wrap()**
+- Applies to: flex containers
+- Values: noWrap / wrap / wrapReverse
+- Default value: noWrap
+- CSS name: flex-wrap
+**Method:**
+- wrap(_: Wrap)
+
+<img width="852" alt="스크린샷 2021-05-14 오후 3 53 12" src="https://user-images.githubusercontent.com/45002556/118233155-7ee1fe00-b4cc-11eb-8bbe-0fb91149b989.png">
+
+**Example:**
+
+```swift
+view.flex.wrap(.nowrap)  // Not required, default value. 
+view.flex.wrap(.wrap)
+```
+
+**6. alignContent()**
+- Applies to: flex containers
+- Values: start / end / center / stretch / spaceBetween / spaceAround
+- Default value: start
+- CSS name: align-content
+**Method:**
+- alignContent(_: AlignContent)
+
+<img width="526" alt="스크린샷 2021-05-14 오후 3 54 16" src="https://user-images.githubusercontent.com/45002556/118233274-a5079e00-b4cc-11eb-9603-554e8fa3105a.png">
+
+**7. layoutDirection()**
+- FlexLayout supports left-to-right (LTR) and right-to-left (RTL) languages.
+
+Using start or end properties, you can position views without having to think about whether your item will show up on the left or the right side of the screen (depending on the person’s language
+
+**Method:**
+- layoutDirection(_: LayoutDirection)
+
 ## FlexLayout git 주소
 <img width="207" alt="스크린샷 2021-05-14 오전 10 21 11" src="https://user-images.githubusercontent.com/45002556/118206748-1c720900-b49e-11eb-9cfb-8b23c28de32e.png">
 

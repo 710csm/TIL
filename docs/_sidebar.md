@@ -18,7 +18,7 @@
     - [RxSwift/RxCocoa](iOS/RxSwift.md)
     - [Localization](iOS/Localizing.md)
     - [애플 로그인](iOS/AppleLogin.md)
-    - [UserDefault](iOS/UserDefault.md)
+    - [UserDefaults](iOS/UserDefault.md)
     - [iOS 스터디](iOS/iOS_Study.md)
 
 - 라이브러리
