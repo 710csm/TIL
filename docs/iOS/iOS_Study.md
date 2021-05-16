@@ -592,5 +592,61 @@ class SomeClass {
 
 ---
 
-## UserDefault
-- 로컬 데이터 베이스
+## Xib
+- iOS 앱에서 UI를 만드는 방법중 하나
+- segue 방식을 사용하지 않을때 사용
+- 화면을 재사용 할 수 있다
+
+![KakaoTalk_Photo_2021-05-16-17-27-16](https://user-images.githubusercontent.com/45002556/118390803-09ad2f00-b66c-11eb-898c-30dc3479d5c0.png)
+
+![KakaoTalk_Photo_2021-05-16-17-27-12](https://user-images.githubusercontent.com/45002556/118390805-0ca81f80-b66c-11eb-9336-ba0e69b1a43d.png)
+
+
+### 사용법
+1. xib파일 생성
+<img width="507" alt="스크린샷 2021-05-16 오후 5 35 56" src="https://user-images.githubusercontent.com/45002556/118391030-3ada2f00-b66d-11eb-8cd7-df88dcb3de71.png">
+- Also create XIB file 체크
+
+2. 사용할 cell을 Register 시킨다
+
+```Swift
+tableView.register(
+    UINib(nibName: UserTableViewCell.identifier, bundle: nil),
+    forCellReuseIdentifier: UserTableViewCell.identifier
+)
+
+tableView.register(
+    UINib(nibName: DeviceTableViewCell.identifier, bundle: nil),
+    forCellReuseIdentifier: DeviceTableViewCell.identifier
+)
+```
+
+3. identifier 값 설정    
+<img width="262" alt="스크린샷 2021-05-16 오후 5 49 07" src="https://user-images.githubusercontent.com/45002556/118391393-06677280-b66f-11eb-8b9c-70b2416110e2.png">
+
+
+4. 테이블 뷰에서 설정
+- 기존의 방법과 같은 방식
+
+```Swift
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    switch indexPath {
+    case IndexPath(row: 0, section: 0):
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: UserTableViewCell.identifier,
+            for: indexPath
+        ) as UserTableViewCell
+        // do something
+        return cell
+    case IndexPath(row: 0, section: 1):
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: DeviceTableViewCell.identifier,
+            for: indexPath
+        ) as DeviceTableViewCell
+        // do something
+        return cell
+    default: 
+        UITableViewCell()
+    }
+}
+```
