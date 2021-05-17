@@ -650,3 +650,95 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     }
 }
 ```
+
+---
+
+## ViewController의 생명주기
+
+![viewLifeCycle](https://user-images.githubusercontent.com/45002556/108618534-7399ac00-7462-11eb-9753-2c66dca88bd9.png)
+
+**loadView**
+- 컨트롤러가 관리하는 뷰를 만든다. 뷰컨트롤러가 생성되고 순차적으로 완성됐을 때만 호출된다.
+
+**viewDidLoad**
+- 컨트롤러의 뷰가 메모리에 올라간 뒤에 호출된다. 뷰가 생성될 때만 호출된다.
+
+**viewWillAppear**
+- 화면에 뷰가 표시될 때마다 호출된다. 이 단계는 뷰는 정의된 바운드를 가지고 있지만 화면. 회전은 적용되지 않는다.
+
+**viewWillLayoutSubviews**
+- 뷰컨트롤러에게 그 자식뷰의 레이아웃을 조정하는 것에 대한 것을 알려주기 위해 호출된다. 이 메소드는 frame이 바뀔때마다 호출된다.
+
+**viewDidLayoutSubview**
+- 뷰가 그 자식 뷰의 레이아웃에 영향을 준 것을 뷰컨트롤러에게 알려주기 위해 허출된다. 뷰가 그 잣긱 view의 레이아웃을 바꾸고난 뒤에 추가적인 변경을 하고 싶을때 사용하는 이벤트 함수
+
+**viewDidAppear**
+- 뷰가 나타났다는 것을 컨트롤러에게 알리는 역할을 한다. 호출되는 시점으로는 뷰가 화면에 나타난 직후에 실행된다.
+
+**viewWillDisAppear**
+- 뷰가 사라지기 직전에 호출되는 함수이다. 뷰가 삭제 되려고 하고있는 것을 viewController에게 알린다.
+
+**viewDidDisappear**
+- ViewController에게 view가 제거되었음을 알린다. 호출 시점은 viewWillDisAppear 다음에 호출된다.
+
+---
+
+## MVC와 MVVM
+
+### MVC
+- MVC 패턴은 Model + View + Controller를 합친 용어입니다.   
+
+1. 구조    
+![f1](https://user-images.githubusercontent.com/45002556/108619957-e0fe0a80-746b-11eb-8afa-692ce309c4e1.png)
+    - Model: 애플리케이션에서 사용되는 데이터와 그 데이터를 처리하는 부분
+    - View: 사용자에서 보여지는 UI 부분입니다
+    - Controller: 사용자의 입력을 받고 처리하는 부분     
+2. 동작
+    - 사용자의 action들은 controller에 들어오게 됩니다.
+    - controller는 사용자의 action을 확인하고, model을 업데이트 합니다.
+    - controller는 model을 나타낼 view를 선택합니다.
+    - view는 model을 이용하여 화면을 나타냅니다
+3. 특징
+    - controller는 여러개의 view를 선택할 수 있는 1:n 구조입니다. controller는 view를 선택할 뿐 직접 업데이트 하지 않습니다.(view는 controller를 알지 못한다)
+4. 장점
+    - MVC 패턴의 장점은 널리 사용되고 있는 패턴이라는 점에 걸맞게 가장 단순합니다. 단순하다 보니 보편적으로 많이 사용되는 디자인 패턴입니다.
+5. 단점
+    - MVC 패턴의 단점은 view와 model 사이의 의존성이 높다는 것입니다. view와 model의 높은 의존성은 어플리케이션이 커질수록 복잡해지고 유지보수가 어렵게 만들 수 있습니다.
+
+### MVVM
+- MVVM 패턴은 Model + View + View Model을 합친 용어입니다. Model과 View는 다른 패턴과 동일합니다.
+
+1. 구조
+![f3](https://user-images.githubusercontent.com/45002556/108619960-e22f3780-746b-11eb-9c30-a6e35fec36ad.png)
+
+    - Model: 어플리케이션에서 사용되는 데이터와 그 데이터를 처리하는 부분입니다.
+    - View: 사용자에서 보여지는 UI 부분입니다.
+    - View Model: View를 표현하기 위해 만든 Model입니다. View를 나타내 주기 위한 Model이자 View를 나타내기 위한 데이터 처리를 하는 부분입니다.
+2. 동작
+    - 사용자의 action들은 view를 통해 들어오게 됩니다.
+    - view에 action이 들어오면, command 패턴으로 view model에 action을 전달합니다.
+    - View model은 model에게 데이터를 요청합니다.
+    - model은 view model에게 요청받은 데이터를 응답합니다.
+    - View model은 응답 받은 데이터를 가공하여 저장합니다.
+    - view는 view model과 Data Binding하여 화면을 나타냅니다.
+3. 특징
+    - MVVM 패턴은 Command 패턴과 Data Binding 두 가지 패턴을 사용하여 구현되었습니다.
+    - Command 패턴과 Data Binding을 이용하여 view와 view model 사이의 의존성을 없앴습니다.
+    - View model과 view는 1:n 관계입니다.
+4. 장점
+    - MVVM 패턴은 view와 model 사이의 의존성이 없습니다. 또한 Command 패턴과 Data Binding을 사용하여 view와 view model 사이의 의존성 또한 없앤 디자인 패턴입니다. 각각의 부분은 독립적이기 때문에 모듈화 화여 개발할 수 있습니다.
+5. 단점
+    - MVVM 패턴의 단점은 view model의 설계가 쉽지 않다는 점입니다.
+    
+### 차이점
+**MVC**
+- view controller
+![스크린샷 2021-05-17 오후 10 04 10](https://user-images.githubusercontent.com/45002556/118493251-dea20880-b75b-11eb-915a-ad1c55d71160.png)
+
+**MVVM**
+- View
+![스크린샷 2021-05-17 오후 9 47 13](https://user-images.githubusercontent.com/45002556/118490973-7fdb8f80-b759-11eb-93d9-722870b71414.png)
+- ViewModel
+![스크린샷 2021-05-17 오후 9 46 38](https://user-images.githubusercontent.com/45002556/118490985-823de980-b759-11eb-99ee-badf4cc8da11.png)
+
+
