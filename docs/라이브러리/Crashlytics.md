@@ -59,5 +59,11 @@ ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TAR
 $(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFORLIST_PATH)
 ```
 
+## Firebase Dashborad 및 crashlytics
+- 다음과 같이 앱이 강제 종료된 케이스와 사용자, 사용중인 플랫폼 등을 확인할 수 있다.
 
+![image](https://user-images.githubusercontent.com/45002556/118591244-d0490080-b7de-11eb-9f82-7ba7b9c29289.png)
 
+![image (1)](https://user-images.githubusercontent.com/45002556/118591246-d212c400-b7de-11eb-9b41-1f1d627cf7cc.png)
+
+![image (2)](https://user-images.githubusercontent.com/45002556/118591252-d3dc8780-b7de-11eb-8e87-2704a69fd48c.png)
