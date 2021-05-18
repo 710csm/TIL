@@ -162,7 +162,7 @@ observable.subscribe { event in
 }
 ```
 
-- .subscribe는 정수의 이벤트 객체를 파라미터로 하는 escaping 클로저 형식 메소드, 반한괎은 Disposable
+- .subscribe는 정수의 이벤트 객체를 파라미터로 하는 escaping 클로저 형식 메소드, 반환값은 Disposable
 
 2. observable.subscribe(onNext:)
 - next 요소만 처리한다는 의미
@@ -336,7 +336,7 @@ subject.onNext("?") // none of print
 - subscriber에게 이벤트를 emit 시키는 방법
     1. 기존 subscriber가 있을 때, subject.onNext() 한 경우
     2. 새로운 subsciber가 subscirbe한 경우
-    
+
 ### PublishSubject 사용
 - 시간에 민감한 데이터를 모델링 할 경우(실시간 경매 앱 - 10:00am 경매 시작일 경우, 10:01am에 접속했을 때 알림이 보내질 필요가 없는 경우)
 
