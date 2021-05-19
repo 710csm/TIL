@@ -741,4 +741,23 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 - ViewModel
 ![스크린샷 2021-05-17 오후 9 46 38](https://user-images.githubusercontent.com/45002556/118490985-823de980-b759-11eb-99ee-badf4cc8da11.png)
 
+---
+
+## Layout 구현
+- 코드로 layout을 구현할 때 알아보기가 힘들고 유지보수에 어려움이 있다
+- SnapKit, FlexLayout과 같은 라이브러리를 사용해서 보기에 좋고 성능도 더 좋게 layout을 구현할 수 있다.
+- 협업을 할 때 FlexLayout과 같은 새로운 기술을 도입할때는 러닝커브가 있어서 주의가 필요하다  (FlexLayout, Texture 등 yoga 관련 프레임워크)
+
+### AutoLayout
+
+<img width="833" alt="스크린샷 2021-05-19 오후 6 48 36" src="https://user-images.githubusercontent.com/45002556/118792787-f2bc4600-b8d2-11eb-8b55-1e413af64001.png">
+
+### SnapKit
+
+<img width="515" alt="스크린샷 2021-05-19 오후 6 48 51" src="https://user-images.githubusercontent.com/45002556/118792804-f64fcd00-b8d2-11eb-8984-83656cf3102e.png">
+
+### FlexLayout
+
+<img width="815" alt="스크린샷 2021-05-19 오후 6 49 04" src="https://user-images.githubusercontent.com/45002556/118792810-f6e86380-b8d2-11eb-8013-0b6a5d5fe231.png">
+
 
