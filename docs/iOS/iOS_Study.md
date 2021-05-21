@@ -597,11 +597,6 @@ class SomeClass {
 - segue 방식을 사용하지 않을때 사용
 - 화면을 재사용 할 수 있다
 
-![KakaoTalk_Photo_2021-05-16-17-27-16](https://user-images.githubusercontent.com/45002556/118390803-09ad2f00-b66c-11eb-898c-30dc3479d5c0.png)
-
-![KakaoTalk_Photo_2021-05-16-17-27-12](https://user-images.githubusercontent.com/45002556/118390805-0ca81f80-b66c-11eb-9336-ba0e69b1a43d.png)
-
-
 ### 사용법
 1. xib파일 생성
 <img width="507" alt="스크린샷 2021-05-16 오후 5 35 56" src="https://user-images.githubusercontent.com/45002556/118391030-3ada2f00-b66d-11eb-8cd7-df88dcb3de71.png">
