@@ -744,7 +744,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 ---
 
 ## Layout 구현
-- 코드로 layout을 구현할 때 알아보기가 힘들고 유지보수에 어려움이 있다
+- 코드로 AutoLayout을 구현할 때 알아보기가 힘들고 유지보수에 어려움이 있다
 - SnapKit, FlexLayout과 같은 라이브러리를 사용해서 보기에 좋고 성능도 더 좋게 layout을 구현할 수 있다.
 - 협업을 할 때 FlexLayout과 같은 새로운 기술을 도입할때는 러닝커브가 있어서 주의가 필요하다  (FlexLayout, Texture 등 yoga 관련 프레임워크)
 
