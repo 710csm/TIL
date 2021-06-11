@@ -21,7 +21,7 @@
 ### Creation, modification and definition of flexbox items      
 **1. addItem(:UIView)**    
 - Applies to: flex containers
-- Returns: FlexLayout interface of the newly added flex item.
+- Returns: flex 아이템이 새롭게 추간된 FlexLayout 인터페이스
 **Method:**    
 - addItem(_: UIView) -> Flex
 **Example:**
@@ -32,7 +32,7 @@
 
 **2. addItem()**    
 - Applies to: flex containers
-- Returns: FlexLayout interface of the newly created flex item.
+- Returns: flex 아이템이 새로 만들어진 FlexLayout 인터페이스
 **Method:**    
 - addItem() -> Flex
 **Example:**
@@ -59,7 +59,7 @@
   }
 ```
 
-The same results can also be obtained without using the define() method, but the result is not as elegant:
+define()을 사용하지 않아도 같은 결과를 얻을 수 있지만 코드가 보기 좋지 않다.
 ```swift
   let columnContainer = UIView()
   columnContainer.flex.addItem(imageView).grow(1)
@@ -93,6 +93,7 @@ rootFlexContainer.flex.layout(mode: .adjustHeight)
 
 ### Flexbox containers properties
 **1. direction()**
+- FlexLayout의 아이템이 쌓이는 방향을 지정
 - Applies to: flex containers
 - Values: column / columnReverse / row / rowReverse
 - Default value: column
@@ -110,6 +111,7 @@ view.flex.direction(.row)
 ```
 
 **2. justifyContent()**
+- FlexLayout의 아이템들이 어떤 모양으로 쌓이는지 정의
 - Applies to: flex containers
 - Values: start / end / center / spaceBetween / spaceAround / spaceEvenly
 - Default value: start
@@ -127,6 +129,7 @@ view.flex.justifyContent(.center)
 ```
 
 **3. alignItems()**
+- FlexLayout의 아이템들이 어떤 모양으로 쌓이는지 정의
 - Applies to: flex containers
 - Values: stretch / start / end / center / baseline
 - Default value: stretch

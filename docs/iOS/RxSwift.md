@@ -42,6 +42,8 @@
     - Elastic: 다양한 workload를 처리(데이터 모음, 자원 공유 등)
     - Message driven: components들은 메세지 기반으로 상호작용 하므로 재사용성의 장점과 lifecycle과 클래스의 구현을 분리
 
+---
+
 ## Rx의 3요소
 1. Observables<Data>    
     - 객체에 이벤트나 값 추가, 수정등과 같은 것을 가능하게끔 해준다.    
@@ -52,12 +54,16 @@
 3. Schedulers
     - 기존에 사용하던 DispatchQueue와 동일한 기능
     
+---
+
 ## RxCocoa
 <img width="690" alt="스크린샷 2021-04-04 오후 4 55 15" src="https://user-images.githubusercontent.com/45002556/113502311-88d81f00-9566-11eb-97d7-55a8a496da98.png">
 
 1. 개념
     - RxCocoa란 "UIKit 및 Cocoa 개발을 지원하는 클래스"를 보유하고 있는 RxSwift 동반 라이브러리 
     - 다양한 UI 구성요소에 대한 반응형 확장(reactive extensions) 기능을 추가하여 UI 이벤트를 추가 가능
+
+---
 
 # Observables
 - Observable이란 여러 이벤트들을 생성(emit)할 수 있는 대상
@@ -131,6 +137,8 @@ next(1)
 completed
 */
 ```
+
+---
 
 # Observable subscribing
 - "옵저버에 대한 구독" 즉, 옵저버에 담긴 이벤트들을 방출(emit) 하는 것이 subscribe 메소드를 사용한는 것
@@ -280,13 +288,22 @@ Disposed
 ```
 - 코드의 흐름: 동기가 아닌 비동기이므로 주의 
 
+---
+
 # Subject
 - 실제 앱 구동시(run time) Observable에 값을 추가하여 emit이 발생하게끔 해주는 대리인
 - Observable에 값을 추가하는 대상은 Observer라 부르며 Observable과 Observer 기능을 둘 다 하는것이 바로 Subject(subscriber가 아님을 주의)
 
 ## Subject의 종류
-1. PublishSubject: empty 상태로 시작, 새로운 이벤트만 subscriber에게 emit
+### 1. PublishSubject: empty 상태로 시작, 새로운 이벤트만 subscriber에게 emit
 - 구독된 순간 이벤트 수신을 알리고 싶을때 사용
+- 시간에 민감한 데이터를 모델링 할 경우(실시간 경매 앱 - 10:00am 경매 시작일 경우, 10:01am에 접속했을 때 알림이 보내질 필요가 없는 경우)
+- PublishSubject는 현재 구독 요청한 대상만 관심을 가진다.(subject.onNext(3)에서 subscriptionOn 관련된 호출하지 않음)
+- 이벤트 추가할 땐 "subject"으로 접근하여 추가(onNext, on)
+- subject.onComplete() 할 시 구독 종료
+- subscriber에게 이벤트를 emit 시키는 방법
+    1. 기존 subscriber가 있을 때, subject.onNext() 한 경우
+    2. 새로운 subsciber가 subscirbe한 경우
 
 <img width="652" alt="스크린샷 2021-04-04 오후 5 49 31" src="https://user-images.githubusercontent.com/45002556/113503632-1d924b00-956e-11eb-977a-af566bb3990b.png">
 
@@ -329,19 +346,11 @@ subject.subscribe {
 subject.onNext("?") // none of print
 ```
 
-- PublishSubject는 현재 구독 요청한 대상만 관심을 가진다.(subject.onNext(3)에서 subscriptionOn 관련된 호출하지 않음)
-- 이벤트 추가할 땐 "subject"으로 접근하여 추가(onNext, on)
-- subject.onComplete() 할 시 구독 종료
+### 2. BehaviorSubject: 하나의 초기값으로 시작, 최신 값(.next)만 새로운 subscriber에게 emit
+- BehaviorSubject는 초기화 값이 필수이며, 항상 저장되어있는 최신값을 emit
+- BehaviorSubject사용: 뷰를 가장 최신의 데이터로 미리 채우기에 용이 (유저 프로필 화면을 BehaviorSubject에 바인딩)
 
-- subscriber에게 이벤트를 emit 시키는 방법
-    1. 기존 subscriber가 있을 때, subject.onNext() 한 경우
-    2. 새로운 subsciber가 subscirbe한 경우
-
-### PublishSubject 사용
-- 시간에 민감한 데이터를 모델링 할 경우(실시간 경매 앱 - 10:00am 경매 시작일 경우, 10:01am에 접속했을 때 알림이 보내질 필요가 없는 경우)
-
-2. BehaviorSubject: 하나의 초기값으로 시작, 최신 값(.next)만 새로운 subscriber에게 emit
-<img width="646" alt="스크린샷 2021-04-10 오후 3 48 32" src="https://user-images.githubusercontent.com/45002556/114261191-41dda400-9a14-11eb-9160-32ea911c7411.png">    
+<img width="613" alt="스크린샷 2021-06-11 오후 2 01 39" src="https://user-images.githubusercontent.com/45002556/121633338-90afc480-cabd-11eb-80c0-0d3e2bb5c183.png">    
 
 ```swift
 enum MyError: Error {
@@ -369,10 +378,8 @@ subject.subscribe {
 .disposed(by: disposeBag)
 // print : 2) error(anError)
 ```
-- BehaviorSubject는 초기화 값이 필수이며, 항상 저장되어있는 최신값을 emit
-- BehaviorSubject사용: 뷰를 가장 최신의 데이터로 미리 채우기에 용이 (유저 프로필 화면을 BehaviorSubject에 바인딩)
 
-3. ReplaySubject: 버퍼 사이즈를 지정하며, 버퍼 사이즈만큼 새로운 subscriber에게 emit
+###  3. ReplaySubject: 버퍼 사이즈를 지정하며, 버퍼 사이즈만큼 새로운 subscriber에게 emit
 <img width="697" alt="스크린샷 2021-04-10 오후 3 53 05" src="https://user-images.githubusercontent.com/45002556/114261319-d811ca00-9a14-11eb-8fec-967cd0ed3b63.png">
 
 ```swift
@@ -425,7 +432,7 @@ subject.subscribe {
 */
 ```
 
-4. PublishRelay, BehaviorRelay: 오직 .next 이벤트만 emit 함 (.completed, .error 무시, non-terminating에서 유용하게 사용)
+###  4. PublishRelay, BehaviorRelay: 오직 .next 이벤트만 emit 함 (.completed, .error 무시, non-terminating에서 유용하게 사용)
 
 - PublishRelay: PublishSubject를 단순히 wrap한 것이며 .next만 가능하고 기능 동일
 - BehaviorRelay: BehaviorSubject를 단순히 wrap한 것이며 .next만 가능하고 기능 동일
@@ -433,6 +440,9 @@ subject.subscribe {
 - UI를 처리할 때 좋다 (ex. TableView)
 
 ### PublishRelay 코드
+- Relay의 추가는 .accept()로 접근
+- error, onCompleted() 사용 불가
+
 ``` swift
 import RxSwift
 import RxCocoa // 필요
@@ -454,10 +464,9 @@ relay.accept("1") // print: 1
 // relay.onCompleted()
 ```
 
-- Relay의 추가는 .accept()로 접근
-- error, onCompleted() 사용 불가
-
 ### BehaviorRelay 코드
+- .accept() 로 다가가며, error, onCompleted를 못 쓴다는 것만 제외하면 BehaviorSubject와 동일하다
+
 ```swift
 import RxSwift
 import RxCocoa
@@ -490,9 +499,8 @@ relay.accept("2")
 2) next(2)
 */
 ```
-- .accept() 로 다가가며, error, onCompleted를 못 쓴다는 것만 제외하면 BehaviorSubject와 동일하다
 
-5. AsyncSubject: 마지막의 이벤트만 subscriber에게 emit (단 .completed 이벤트를 받은 경우만)
+### 5. AsyncSubject: 마지막의 이벤트만 subscriber에게 emit (단 .completed 이벤트를 받은 경우만)
 - .onNext() 메소드도 사용 불가, 오직 accept(:_) 만 사용 가능
 
 # RxSwift를 사용한 버튼 bind
@@ -504,6 +512,8 @@ button.rx.tap.bind { _ in
     // something do
 }.disposed(by: disposeBag)
 ```
+
+---
 
 # RxSwift/RxCocoa를 사용한 TableView 설정
 -  BehaviorRelay를 사용하여 TableView의 UI를 설정

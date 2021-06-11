@@ -5,7 +5,8 @@
 ## 사용법
 - UserDefaults.standard 뒤에 원하는 데이터 타입을 적으면 된다.
 
-- 값을 저장할 때
+1. 값을 저장할 때
+
 ```Swift
 // bool
 let flag = true
@@ -16,7 +17,8 @@ let str = "test"
 UserDefaults.standard.set(str, forKey: "someStr")
 ```
 
-- 값을 가져올 때
+2. 값을 가져올 때
+
 ```Swift
 // bool
 UserDefaults.standard.bool(forKey: "someBool")
