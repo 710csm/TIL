@@ -1,5 +1,5 @@
 - iOS 및 Swift
-    - [Swift - 정리](iOS/Swift정리.md)
+    - [Swift 기초](iOS/Swift기초.md)
     - [Swift - try? try!](iOS/Swift_try.md)
     - [Swift - Access Control](iOS/Swift_accessControll.md)
     - [Notification](iOS/Notification.md)
@@ -40,4 +40,5 @@
     - [디자인 패턴](etc/디자인패턴.md)
     - [Rest API와 소켓 통신의 차이점](etc/Rest_소켓_차이.md)
     - [github](etc/github.md)
+    - [동기와 비동기](etc/Manipulation.md)
 

@@ -1,70 +1,5 @@
 # Swift 기초
 
-## weak와 strong에 대한 설명
-- strong(강한 참조): strong은 객체를 소유하여 레퍼런스 카운터가 증가하는 프로퍼티이다. 값 지정 시점에 retain이 되고 참조가 종료되는 시점에 release가 된다. 객체에 강한 참조가 남아 있는한 해당 객체는 메모리가 해제되지않는다.
-- weak(약한 참조): weak는 객체를 소유하지 않고 주소값만을 가지고 있는 포인터 개념이다. 자신이 참조는 하지만 weak 메모리를 해제시킬 수 있는 권한은 다른 클래스에 있다. 값 지정시 리테인이 발생하지 않는다. 따라서 릴리즈도 발생하지 않는다. 그래서 언제 어떻게 메모리가 해제되는지 알 수 없다. 다만 메모리가 해제될 경우 자동으로 레퍼런스가 nil 로 초기화를 해준다. 그렇기 때문에 weak 속성을 사용하는 객체는 항상 옵셔널 타입이다.
-- owned: 객체가 할당될 때 레퍼런스 카운터를 증가시키지 않는다. 그러나 Non-Optional 타입으로 선언되어야 하며, 객체가 ARC에 의해 메모리가 해제가 되더라도, 해당 객체 값을 존재하는 것으로 인지하며, 해당 객체에 액세스 할 경우 런타임 오류를 발생시킨다. 객체의 라이프 사이클이 명확하고 개발자의 의해 제어 기능이 명확한 경우, weak Optional 타입 대신 사용하여 좀 더 간결한 코딩이 가능하다.
-
----
-
-## Escaping Closure의 개념
- 메소드 파라미터로 전달 받은 closure를 메소드의 라이프 사이클 내에서 실행하여 끝내지 않고, 메소드 scope의 외부에 전달하려 할 때는 해당 closure를 escaping 해야한다. 해당 메소드의 호출이 끝난 이후에도 closure는 메모리 어딘가에 저장되어야 하며, 이는 closure 안에서 사용된 outer object(self와 같은)에 weak와 같은 레퍼런스 타입을 사용해야 할 수 있음을 주의 하도록 한다. escaping이 명시되어 있지 않으면 기본적으로 non-escaping이며, 이는 메소드의 실행이 끝나기 전에 closure의 사용이 모두 완료됨을 보장한다. 따라서 closure 내에서 weak를 굳이 사용하지 않아도 안전할 수 있음을 의미하기도 한다.
-
----
-
-## 타입 캐스팅을 할 때 사용하는 키워드인 as, as?, as! 이 셋의 차이는 무엇인가요?
-- as: 컴파일러가 타입 변환의 성공을 보장. 컴파일 타임에 가능/불가능 여부를 알 수 있음
-- as?: 타입 변환에 실패하는 경우 nil을 리턴. 컴파일 타임에 가능/불가능 여부를 알 수 없음
-- as!: 타입 변환에 실패하는 경우 실행시간(Runtime) 오류를 발생시킨다. 가능/불가능 여부를 알 수 없음
-
----
-
-## Swift에서 Class와 struct의 차이는 무엇인가요?
-**Class-Referentce type**
-- 객체화 시 힙 메모리 영역에 저장되며 ARC로 객체의 메모리 해제가 관리된다.
-- 대입 연산 시 레퍼런스가 복사되어 할당됨
-- 멀티 스레딩 시 적절한 Lock 활용이 필요
-- 상속 가능
-![classReference](https://user-images.githubusercontent.com/45002556/108618550-844a2200-7462-11eb-9830-68d30ea83d65.png)
-
-**Struct-Value type**
-- 대입 연산시 값 자체가 복제되어 할당됨(공유가 불가)
-- 불변성 구현에 유리
-- 멀티스레딩에 안전함
-- 상속이 불가능 (프로토콜은 사용 가능)
-![structValue](https://user-images.githubusercontent.com/45002556/108618553-86ac7c00-7462-11eb-83fe-60679c27cac3.png)
-
----
-
-## 고차함수 (Map, Reduce, Filter)에 대해    
-Swift에서 함수는 일급 시민으로 취급되기 때문에 다른 함수의 전달인자로 사용될 수 있다. 고차 함수란 매개 변수로 함수를 받는 함수를 말한다.
-
-- Map: 데이터를 변형하고자 할 때 사용된다. 기존 컨테이너의 값들은 변경되지 않고 새로운 컨테이너를 생성하여 반환한다.
-    1. 장점: 코드 재사용 용이 / 컴파일러 최적화 측면에서 성능이 좋다 / 다중 스레드 환경에서 하나의 컨테이너에 여러 스레드들이 동시에 변경을 하려고 할 때 예측하지 못한 결과 발생을 방지.
-    2. 배열의 값 하나하나에 함수를 적용할 때 사용
-![map](https://user-images.githubusercontent.com/45002556/108618563-975cf200-7462-11eb-8277-b90cc41f2138.png)
-
-- Filter: 컨테이너 내부의 값들을 걸러서 추출하고자 할 때 사용한다. Filter의 매개변수로 전달되는 함수의 반환 타입은 Bool이다. true라면 값을 포함하고 false면 배제하여, map과 마찬가지로 새로운 컨테이너를 생성하여 반환한다. 조건에 맞는 항목만 찾아내기
-
-![filter1](https://user-images.githubusercontent.com/45002556/108618624-ef93f400-7462-11eb-92b5-19b4a62c8dee.png)
-![filter2](https://user-images.githubusercontent.com/45002556/108618625-f15db780-7462-11eb-85c6-657392ba9aaf.png)
-
-- Reduce: 컨테이너 내부를 하나로 합쳐주는 기능을 한다. 정수 배열이라면 전달받은 함수의 연산 결과로 합쳐주고, 문자열 배열이라면 문자열을 하나로 합쳐준다. 첫 번째 매개변수를 통해 초기값을 지정할 수 있다. 이 초기값이 최초의 $0으로 사용된다. 컬렉션의 값들을 조건에 따라 하나의 값으로 만든다.
-![reduce1](https://user-images.githubusercontent.com/45002556/108618634-020e2d80-7463-11eb-9526-e29a60ca680e.png)
-
-![reduce2](https://user-images.githubusercontent.com/45002556/108618635-03d7f100-7463-11eb-9dab-c625b22b9c4e.png)
-      
-map, filter, reduce vs for in loop 비교
-https://www.skoumal.com/en/performance-of-built-in-higher-order-functions-map-filter-reduce-and-flatmap-vs-for-in-loop-in-swift/
-
----
-
-## Swift - Codable
-
-- Codable protocol은 Json, plist 등으로 이루어진 데이터를 편리하게 객체로 변환해주는 protocol입니다.
-
----
-
 ## for문
 1. 일반적인 사용법
 
@@ -656,3 +591,66 @@ class SomeClass {
 - 위 함수에서 인자로 전달된 completionHandler는 someFunctionWithEscapingClosure 함수가 끝나고 나중에 처리 된다. 만약 함수가 끝나고 실행되는 클로저에 @escaping 키워드를 붙이지 않으면 컴파일시 오류가 발생.
 
 ---
+
+## weak와 strong에 대한 설명
+- strong(강한 참조): strong은 객체를 소유하여 레퍼런스 카운터가 증가하는 프로퍼티이다. 값 지정 시점에 retain이 되고 참조가 종료되는 시점에 release가 된다. 객체에 강한 참조가 남아 있는한 해당 객체는 메모리가 해제되지않는다.
+- weak(약한 참조): weak는 객체를 소유하지 않고 주소값만을 가지고 있는 포인터 개념이다. 자신이 참조는 하지만 weak 메모리를 해제시킬 수 있는 권한은 다른 클래스에 있다. 값 지정시 리테인이 발생하지 않는다. 따라서 릴리즈도 발생하지 않는다. 그래서 언제 어떻게 메모리가 해제되는지 알 수 없다. 다만 메모리가 해제될 경우 자동으로 레퍼런스가 nil 로 초기화를 해준다. 그렇기 때문에 weak 속성을 사용하는 객체는 항상 옵셔널 타입이다.
+- owned: 객체가 할당될 때 레퍼런스 카운터를 증가시키지 않는다. 그러나 Non-Optional 타입으로 선언되어야 하며, 객체가 ARC에 의해 메모리가 해제가 되더라도, 해당 객체 값을 존재하는 것으로 인지하며, 해당 객체에 액세스 할 경우 런타임 오류를 발생시킨다. 객체의 라이프 사이클이 명확하고 개발자의 의해 제어 기능이 명확한 경우, weak Optional 타입 대신 사용하여 좀 더 간결한 코딩이 가능하다.
+
+---
+
+## Escaping Closure의 개념
+ 메소드 파라미터로 전달 받은 closure를 메소드의 라이프 사이클 내에서 실행하여 끝내지 않고, 메소드 scope의 외부에 전달하려 할 때는 해당 closure를 escaping 해야한다. 해당 메소드의 호출이 끝난 이후에도 closure는 메모리 어딘가에 저장되어야 하며, 이는 closure 안에서 사용된 outer object(self와 같은)에 weak와 같은 레퍼런스 타입을 사용해야 할 수 있음을 주의 하도록 한다. escaping이 명시되어 있지 않으면 기본적으로 non-escaping이며, 이는 메소드의 실행이 끝나기 전에 closure의 사용이 모두 완료됨을 보장한다. 따라서 closure 내에서 weak를 굳이 사용하지 않아도 안전할 수 있음을 의미하기도 한다.
+
+---
+
+## 타입 캐스팅을 할 때 사용하는 키워드인 as, as?, as! 이 셋의 차이는 무엇인가요?
+- as: 컴파일러가 타입 변환의 성공을 보장. 컴파일 타임에 가능/불가능 여부를 알 수 있음
+- as?: 타입 변환에 실패하는 경우 nil을 리턴. 컴파일 타임에 가능/불가능 여부를 알 수 없음
+- as!: 타입 변환에 실패하는 경우 실행시간(Runtime) 오류를 발생시킨다. 가능/불가능 여부를 알 수 없음
+
+---
+
+## Swift에서 Class와 struct의 차이는 무엇인가요?
+**Class-Referentce type**
+- 객체화 시 힙 메모리 영역에 저장되며 ARC로 객체의 메모리 해제가 관리된다.
+- 대입 연산 시 레퍼런스가 복사되어 할당됨
+- 멀티 스레딩 시 적절한 Lock 활용이 필요
+- 상속 가능
+![classReference](https://user-images.githubusercontent.com/45002556/108618550-844a2200-7462-11eb-9830-68d30ea83d65.png)
+
+**Struct-Value type**
+- 대입 연산시 값 자체가 복제되어 할당됨(공유가 불가)
+- 불변성 구현에 유리
+- 멀티스레딩에 안전함
+- 상속이 불가능 (프로토콜은 사용 가능)
+![structValue](https://user-images.githubusercontent.com/45002556/108618553-86ac7c00-7462-11eb-83fe-60679c27cac3.png)
+
+---
+
+## 고차함수 (Map, Reduce, Filter)에 대해    
+Swift에서 함수는 일급 시민으로 취급되기 때문에 다른 함수의 전달인자로 사용될 수 있다. 고차 함수란 매개 변수로 함수를 받는 함수를 말한다.
+
+- Map: 데이터를 변형하고자 할 때 사용된다. 기존 컨테이너의 값들은 변경되지 않고 새로운 컨테이너를 생성하여 반환한다.
+    1. 장점: 코드 재사용 용이 / 컴파일러 최적화 측면에서 성능이 좋다 / 다중 스레드 환경에서 하나의 컨테이너에 여러 스레드들이 동시에 변경을 하려고 할 때 예측하지 못한 결과 발생을 방지.
+    2. 배열의 값 하나하나에 함수를 적용할 때 사용
+![map](https://user-images.githubusercontent.com/45002556/108618563-975cf200-7462-11eb-8277-b90cc41f2138.png)
+
+- Filter: 컨테이너 내부의 값들을 걸러서 추출하고자 할 때 사용한다. Filter의 매개변수로 전달되는 함수의 반환 타입은 Bool이다. true라면 값을 포함하고 false면 배제하여, map과 마찬가지로 새로운 컨테이너를 생성하여 반환한다. 조건에 맞는 항목만 찾아내기
+
+![filter1](https://user-images.githubusercontent.com/45002556/108618624-ef93f400-7462-11eb-92b5-19b4a62c8dee.png)
+![filter2](https://user-images.githubusercontent.com/45002556/108618625-f15db780-7462-11eb-85c6-657392ba9aaf.png)
+
+- Reduce: 컨테이너 내부를 하나로 합쳐주는 기능을 한다. 정수 배열이라면 전달받은 함수의 연산 결과로 합쳐주고, 문자열 배열이라면 문자열을 하나로 합쳐준다. 첫 번째 매개변수를 통해 초기값을 지정할 수 있다. 이 초기값이 최초의 $0으로 사용된다. 컬렉션의 값들을 조건에 따라 하나의 값으로 만든다.
+![reduce1](https://user-images.githubusercontent.com/45002556/108618634-020e2d80-7463-11eb-9526-e29a60ca680e.png)
+
+![reduce2](https://user-images.githubusercontent.com/45002556/108618635-03d7f100-7463-11eb-9dab-c625b22b9c4e.png)
+      
+map, filter, reduce vs for in loop 비교
+https://www.skoumal.com/en/performance-of-built-in-higher-order-functions-map-filter-reduce-and-flatmap-vs-for-in-loop-in-swift/
+
+---
+
+## Swift - Codable
+
+- Codable protocol은 Json, plist 등으로 이루어진 데이터를 편리하게 객체로 변환해주는 protocol입니다.
