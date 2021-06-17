@@ -515,6 +515,23 @@ button.rx.tap.bind { _ in
 
 ---
 
+# Driver
+- Driver는 UI Layer에 사용하기 좋다 
+- Observable은 상황에 따라 MainSchedulaer와 BackgroundScheduler를 지정해줘야 하지만 Driver는 MainScheduler에서 사용한다.
+- error를 return 하지 않는다.
+- 스트림을 공유할 수 있어 불필요한 리소스 낭비를 막을 수 있다.
+
+## Driver vs bind
+bind는 Observer가 추가될 때마다 새로운 스트림이 실행된다.     
+즉, Observable을 구동하는 Observer가  추가될 때 스트림도 같이 추가된다.      
+불필요하게 리소스가 낭비된다.
+
+driver는 스트림을 공유할 수 있다.    
+즉, driver 객체를 구독하는 Observer가 추가될 때 스트림도 같이 추가되는 것이 아니라   
+스트림은 하나로 유지되고 이를 같이 구독해서 각자의 작업을 한다.
+
+---
+
 # RxSwift/RxCocoa를 사용한 TableView 설정
 -  BehaviorRelay를 사용하여 TableView의 UI를 설정
 
