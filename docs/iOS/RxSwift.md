@@ -288,6 +288,10 @@ Disposed
 ```
 - 코드의 흐름: 동기가 아닌 비동기이므로 주의 
 
+4. subscribe와 bind의 차이점
+bind(onNext)는 에러를 emit하지 않고 item event에 관해서만 emit하게 된다.    
+그래서 error / complete / disposed를 emit 하려면 subscrive(onNext: ...)를 써야한다.
+
 ---
 
 # Subject

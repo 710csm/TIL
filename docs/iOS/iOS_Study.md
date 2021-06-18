@@ -183,3 +183,24 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 ### FlexLayout
 
 <img width="815" alt="스크린샷 2021-05-19 오후 6 49 04" src="https://user-images.githubusercontent.com/45002556/118792810-f6e86380-b8d2-11eb-8013-0b6a5d5fe231.png">
+
+--- 
+
+## Storyboards vs Xib
+- 규모가 큰 프로젝트를 진행할 때는 Storyboards 보다 Xib가 더 좋다. 규모가 큰 프로젝트에 Storyboards를 사용할 경우 뷰가 많아져서 보기 힘들고 merge에 어려움을 겪을 수 있다. 
+- 혼자 개발하거나 규모가 작은 프로젝트를 진행하는 경우 Storyboards를 사용하는게 좋다. Storyboards를 사용하면 개발 시간을 줄일 수 있다.
+
+### Storyboards
+- Storyboards: 스토리보드는 여러 뷰와 뷰 사이의 전환을 배치하기 위한 시각적 도구.
+- 앱을 빌드하지 않고 뷰의 flow를 확인하고 싶을 때 사용하면 좋다. 
+- 코드의 양을 줄이는 경우 도움이 될 수 있다.
+- 빠르게 프로토타입을 만들어야 할 때 쉽게 만들 수 있다.
+- 코드로 오토 레이아웃을 만드는 것보다 쉽다.
+
+### XIBs
+- XIBs(or Nibs): 각 XIB 파일은 단일 뷰 요소에 해당하며 인터페이스 빌더에 배치될 수 있으므로 시작적 도구로도 사용할 수 있다.
+- 각각의 뷰가 xib를 가지고 있어서 파일이 많아진다. 하지만 개발하기 쉽고 테스트와 디버그에 용이하다.
+- 모달 보기, 로그인/회원가입 화면, 뷰를 재사용 할 때(table view cell)에 사용하면 좋다. 개발 시간을 줄일 수 있다.
+- 스토리보드와 마찬가지로 시작적인 도구를 사용해 무엇을 만들고 있는지 쉽게 파악 가능하다.
+- 스토리보드보다 쉽게 오토 레이아웃을 사용 할 수 있다.
+
