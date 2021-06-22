@@ -51,5 +51,18 @@ $ pod install
 $ pod update
 ```
 
+**7. 라이브러리 정리하기**
+- 라이브러리가 잘못 설치됐거나 여러명이서 작업하다가 꼬여있을 경우
+
+```
+// 설치
+$ sudo gem install cocoapods-deintegrate cocoapods-clean
+
+pod deintegrate
+pod clean
+pod install
+```
+
+
 ## 협업
 - Podfile.lock을 사용하여 pod 버전을 모두 동일하게 유지할 수 있다.
