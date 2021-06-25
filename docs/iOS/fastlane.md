@@ -41,9 +41,9 @@ default_platform(: ios)
 platform :ios do
     desc "Push a new beta build to TestFlight"
     lane :beta do
-        increment_build_number(xcodeproj: "example.xcodeproj")          # 빌드번호를 자동으로 1 올려주는 코드
+        increment_build_number(xcodeproj: "example.xcodeproj")             # 빌드번호를 자동으로 1 올려주는 코드
         build_app(workspace: "example.xcworkspace", scheme: "scheme 이름")  # 빌드
-        upload_to_testflight                                            # TestFlight 업로드
+        upload_to_testflight                                               # TestFlight 업로드
     end
 end
 ```
