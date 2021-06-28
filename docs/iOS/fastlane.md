@@ -87,4 +87,9 @@ lane :beta do
 end
 ```
 
-- guide: https://codesigning.guide/
+
+## 참고
+1. https://codesigning.guide/
+2. https://littleshark.tistory.com/35
+3. https://sesang06.tistory.com/124
+4. https://nashorn.tistory.com/entry/Fastlane%EA%B3%BC-Match%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%95%84%EC%9D%B4%ED%8F%B0-%EC%9D%B8%EC%A6%9D%EC%84%9C-%EC%B2%98%EB%A6%AC
