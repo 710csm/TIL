@@ -407,6 +407,50 @@ class SubClass {
 
 ---
 
+## 고차함수 (Map, Reduce, Filter)에 대해    
+Swift에서 함수는 일급 시민으로 취급되기 때문에 다른 함수의 전달인자로 사용될 수 있다. 고차 함수란 매개 변수로 함수를 받는 함수를 말한다.
+
+1. Map: 데이터를 변형하고자 할 때 사용된다. 기존 컨테이너의 값들은 변경되지 않고 새로운 컨테이너를 생성하여 반환한다.
+    - 코드 재사용 용이 / 컴파일러 최적화 측면에서 성능이 좋다 / 다중 스레드 환경에서 하나의 컨테이너에 여러 스레드들이 동시에 변경을 하려고 할 때 예측하지 못한 결과 발생을 방지.
+    - 배열의 값 하나하나에 함수를 적용할 때 사용
+
+```Swift
+let numbers = [0, 1, 2, 3, 4]
+
+var doubleNumbers = [Int]()
+var strings = [String]()
+
+// for-in
+for number in numbers {
+    doubledNumbers.append(number * 2)
+    strings.append("\(number)")
+}
+
+// map
+doubledNumbers = numbers.map {$0 * 2}
+strings = numbers.map {"\($0)"}
+```
+
+2. Filter: 컨테이너 내부의 값들을 걸러서 추출하고자 할 때 사용한다. Filter의 매개변수로 전달되는 함수의 반환 타입은 Bool이다. true라면 값을 포함하고 false면 배제하여, map과 마찬가지로 새로운 컨테이너를 생성하여 반환한다. 조건에 맞는 항목만 찾아내기
+
+```Swift
+let numbers = [0, 1, 2, 3, 4, 5]
+
+let evens = numbers.filter {$0 % 2 == 0} // [0, 2, 4]
+let odds = numbers.map {$ + 3}.filter {$0 % 2 != 0} // [3, 5, 7]
+```
+
+3. Reduce: 컨테이너 내부를 하나로 합쳐주는 기능을 한다. 정수 배열이라면 전달받은 함수의 연산 결과로 합쳐주고, 문자열 배열이라면 문자열을 하나로 합쳐준다. 첫 번째 매개변수를 통해 초기값을 지정할 수 있다. 이 초기값이 최초의 $0으로 사용된다. 컬렉션의 값들을 조건에 따라 하나의 값으로 만든다.
+
+```Swift
+array.reduce(초기값, combine: +)를 하면 배열의 모든 값이 더해진 하나의 값을 리턴
+
+let numbers = [1, 2, 3]
+var sum = numbers.reduce(10) {$0 + $1} // 16
+```
+
+---
+
 ## Performance of Map, Filter, Reduce vs for-in loop in Swift
 ### 1. for 문과 map의 성능 비교
 
@@ -628,29 +672,27 @@ class SomeClass {
 
 ---
 
-## 고차함수 (Map, Reduce, Filter)에 대해    
-Swift에서 함수는 일급 시민으로 취급되기 때문에 다른 함수의 전달인자로 사용될 수 있다. 고차 함수란 매개 변수로 함수를 받는 함수를 말한다.
-
-- Map: 데이터를 변형하고자 할 때 사용된다. 기존 컨테이너의 값들은 변경되지 않고 새로운 컨테이너를 생성하여 반환한다.
-    1. 장점: 코드 재사용 용이 / 컴파일러 최적화 측면에서 성능이 좋다 / 다중 스레드 환경에서 하나의 컨테이너에 여러 스레드들이 동시에 변경을 하려고 할 때 예측하지 못한 결과 발생을 방지.
-    2. 배열의 값 하나하나에 함수를 적용할 때 사용
-![map](https://user-images.githubusercontent.com/45002556/108618563-975cf200-7462-11eb-8277-b90cc41f2138.png)
-
-- Filter: 컨테이너 내부의 값들을 걸러서 추출하고자 할 때 사용한다. Filter의 매개변수로 전달되는 함수의 반환 타입은 Bool이다. true라면 값을 포함하고 false면 배제하여, map과 마찬가지로 새로운 컨테이너를 생성하여 반환한다. 조건에 맞는 항목만 찾아내기
-
-![filter1](https://user-images.githubusercontent.com/45002556/108618624-ef93f400-7462-11eb-92b5-19b4a62c8dee.png)
-![filter2](https://user-images.githubusercontent.com/45002556/108618625-f15db780-7462-11eb-85c6-657392ba9aaf.png)
-
-- Reduce: 컨테이너 내부를 하나로 합쳐주는 기능을 한다. 정수 배열이라면 전달받은 함수의 연산 결과로 합쳐주고, 문자열 배열이라면 문자열을 하나로 합쳐준다. 첫 번째 매개변수를 통해 초기값을 지정할 수 있다. 이 초기값이 최초의 $0으로 사용된다. 컬렉션의 값들을 조건에 따라 하나의 값으로 만든다.
-![reduce1](https://user-images.githubusercontent.com/45002556/108618634-020e2d80-7463-11eb-9526-e29a60ca680e.png)
-
-![reduce2](https://user-images.githubusercontent.com/45002556/108618635-03d7f100-7463-11eb-9dab-c625b22b9c4e.png)
-      
-map, filter, reduce vs for in loop 비교
-https://www.skoumal.com/en/performance-of-built-in-higher-order-functions-map-filter-reduce-and-flatmap-vs-for-in-loop-in-swift/
-
----
-
 ## Swift - Codable
 
 - Codable protocol은 Json, plist 등으로 이루어진 데이터를 편리하게 객체로 변환해주는 protocol입니다.
+
+
+## Type Inference vs Type Annotaion
+1. Type Inference
+- 선언과 동시에 초기화를 통해 컴파일러가 초기화된 값으로 타입을 추론하는것
+- 하지만 원하는 타입으로 지정되지 않을 수 있다
+
+```Swift
+let str = "abcedf"  // 컴파일이 String으로 타입을 지정
+let num1 = 123      // 컴파일이 Int로 타입을 지정
+
+let num2 = 15.0     // Float이 아닌 Double로 타입 지정, Float으로 지정하고 싶을때는 문제가 발생
+```
+
+2. Type Annotation
+- 직접 자료형을 지정, 초기값이 없어도 된다
+
+```Swift
+var str: String
+var num: Float
+```
