@@ -19,6 +19,7 @@
 disabled_rules: 사용하지 않을 규칙   
 included: 포함할 파일 정의       
 excluded: 포함하지 않을 파일 정의     
+opt_in_rules: 사용할 특정 규칙을 정의
 
 **예시**   
 disabled_rules:
@@ -34,6 +35,17 @@ excluded:
 - smartlearning.iosTests
 - AppDelegate.swift
 - SceneDelegate.swift
+
+file_length:
+  warning: 600
+  error: 1200
+  
+cyclomatic_complexity:
+  warning: 15
+  error: 20
+  
+opt_in_rules:
+- explicit_type_interface
 
 ## SwiftLint git 주소     
 https://github.com/realm/SwiftLint
