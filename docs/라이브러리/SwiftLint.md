@@ -36,12 +36,12 @@ excluded:
 - AppDelegate.swift
 - SceneDelegate.swift
 
-file_length:
-  warning: 600
+file_length:   
+  warning: 600   
   error: 1200
   
-cyclomatic_complexity:
-  warning: 15
+cyclomatic_complexity:   
+  warning: 15   
   error: 20
   
 opt_in_rules:

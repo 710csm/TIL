@@ -33,8 +33,13 @@ func hexStringToUIColor (hex: String, alpha: CGFloat = 1.0) -> UIColor {
         return UIColor.gray
     }
     
+    // iOS 13 미만의 버전
     var rgbValue: UInt32 = 0
     Scanner(string: cString).scanHexInt32(&rgbValue)
+    
+    // iOS 13 이상의 버전
+    var rgbValue: UInt64 = 0
+    Scanner(string: cString).scanHexInt64(&rgbValue)
     
     return UIColor(
         red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,

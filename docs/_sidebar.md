@@ -22,6 +22,7 @@
     - [iOS 스터디](iOS/iOS_Study.md)
     - [Fastlane](iOS/fastlane.md)
     - [CAGradientLayer](iOS/gradient.md)
+    - [View의 알파값](iOS/ColorAlpha.md)
 
 - 라이브러리
     - [CocoaPods](라이브러리/CocoaPods.md)
@@ -38,6 +39,7 @@
     - [FlexLayout](라이브러리/FlexLayout.md)
     - [Moya](라이브러리/Moya.md)
     - [Swinject](라이브러리/Swinject.md)
+    - [Carte](라이브러리/Carte.md)
 
 - etc
     - [디자인 패턴](etc/디자인패턴.md)
