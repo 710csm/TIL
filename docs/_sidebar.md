@@ -40,6 +40,8 @@
     - [Moya](라이브러리/Moya.md)
     - [Swinject](라이브러리/Swinject.md)
     - [Carte](라이브러리/Carte.md)
+    - [구글 로그인](라이브러리/GoogleLogin.md)
+    - [페이스북 로그인](라이브러리/FaceBookLogin.md)
 
 - etc
     - [디자인 패턴](etc/디자인패턴.md)
