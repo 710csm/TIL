@@ -48,4 +48,5 @@
     - [Rest API와 소켓 통신의 차이점](etc/Rest_소켓_차이.md)
     - [github](etc/github.md)
     - [동기와 비동기](etc/Manipulation.md)
+    - [Xcode Merge Conflict](etc/xcode_merge.md)
 
