@@ -23,6 +23,7 @@
     - [Fastlane](iOS/fastlane.md)
     - [CAGradientLayer](iOS/gradient.md)
     - [View의 알파값](iOS/ColorAlpha.md)
+    - [탈옥 및 루팅](iOS/JailBreak.md)
 
 - 라이브러리
     - [CocoaPods](라이브러리/CocoaPods.md)
