@@ -111,3 +111,7 @@ $ touch .gitignore
  iOSInjectionProject/
  .DS_Store
  ```
+
+## 토큰을 사용해 git에 push에 하는 방법
+
+<img width="646" alt="스크린샷 2021-08-26 오후 11 45 08" src="https://user-images.githubusercontent.com/45002556/130984306-6d6e9ebe-8f84-42b2-99d8-0e6be82e792b.png">
