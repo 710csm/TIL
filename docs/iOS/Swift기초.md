@@ -560,6 +560,31 @@ Observable.from(fahrenheit)
 <img width="635" alt="스크린샷 2021-05-08 오후 5 12 05" src="https://user-images.githubusercontent.com/45002556/117532044-857dfa80-b020-11eb-8686-8961b8ed675e.png">
 - 성능이 매우 좋지 않다는것을 확인할 수 있다.
 
+## 고차함수2 (flatMap, CompactMap)
+    
+```Swift
+let array = [1, nil, 3, nil, 5, 6, 7]
+let flatMapTest = array.flatMap{ $0 }
+let compactMapTest = array.compactMap { $0 }
+
+print("flatMapTest :", flatMapTest)
+print("compactMapTest :", compactMapTest)
+
+<출력>
+flatMapTest : [1, 3, 5, 6, 7]
+compactMapTest : [1, 3, 5, 6, 7]
+```
+
+- 1차원 배열에서는 flatMap과 compactMap 둘다 똑같은 결과가 나온다.
+- 스위프트 4.1부터는 두개를 구분해서 사용해야 한다.
+- 2차원 배열에서는 둘다 nil을 제거하지 않고 1차원 배열일대만 nil 제거를 합니다.
+
+### 1. compactMap
+- 1차원 배열에서 nil을 제거하고 옵셔널 바인딩을 할 때 사용한다. 
+
+### 2. flatMap
+- 2차원 배열을 1차원 배열로 flatten하게 만들 때 사용한다.  
+
 ---
 
 ## Closure
