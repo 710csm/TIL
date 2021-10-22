@@ -28,6 +28,7 @@
     - [Dynamic Cell Size](iOS/DynamicCell.md)
     - [SwiftUI의 State](iOS/SwiftUI_State.md)
     - [PropertyWrapper](iOS/PropertyWrapper.md)
+    - [Key Value Observing](iOS/KeyValueObserving.md)
 
 - 라이브러리
     - [오픈 소스 라이브러리](라이브러리/오픈소스라이브러리.md)
