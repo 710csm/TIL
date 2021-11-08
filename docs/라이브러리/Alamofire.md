@@ -10,6 +10,16 @@
 - File / Data / Stream / MultipartFormData 등 업로드 기능   
 - HTTP Respones의 검증(Validation)       
 
+## 설치 방법
+```
+pod 'Alamofire'
+// 또는
+pod 'Alamofire', '-> 5.2'
+
+// 이후
+pod install
+```
+
 ## 기본 사용법     
 ```swift
 AF.request() //다른 모든 HTTP 요청은 파일 전송과 관련 없다

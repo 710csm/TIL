@@ -7,7 +7,7 @@ do와 catch 문을 모두 적어주지 않아도 간편히 에러처리 가능�
 ```swift
 do {
     y = try someThrowingFunction()
-}catch {
+} catch {
     y = nil
 }
 ```
