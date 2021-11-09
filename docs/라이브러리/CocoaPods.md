@@ -63,6 +63,13 @@ pod clean
 pod install
 ```
 
+## 에러
+
+**you don't have write permissions for the /usr/bin directory 에러 시**
+```
+sudo gem install cocoapods -n /usr/local/bin 
+// 이후 pod init
+```
 
 ## 협업
 - Podfile.lock을 사용하여 pod 버전을 모두 동일하게 유지할 수 있다.
