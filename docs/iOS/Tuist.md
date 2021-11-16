@@ -1,4 +1,7 @@
 # Tuist
+- Xcode로 개발시 .xcodeproj 파일 때문에 git에서 merge시 conflict가 자주 일어난다. 또한 모듈화시 의존성이 많아질 경우 제어가 힘들어진다. 따라서 더 효율적인 관리를 위해 tuist를 사용할 수 있다. tuist와 비슷한 툴로 XcodeGen이 있다.
+- XcodeGen은 yml이나 json으로 프로젝트를 설정하지만 tuist는 Project.swift라는 Swift파일로 설정 관리를 한다. tuist가 XcodeGen보다 초기 프로젝트 설정은 더욱 편리하다.
+
 
 ## 설치법
 
@@ -20,6 +23,9 @@ tuist generate
 
 // 프로젝트 파일만 생성하고 싶을 때
 tuist generate --project-only
+
+// 프로젝트 생성과 동시에 Xcode로 실행
+tuist generate --open
 ```
 
 ## 기존 프로젝트에서 생성할 경우
@@ -88,6 +94,92 @@ tuist lint project
 ```
 tuist generate
 ```
+
+## 또 다른 프로젝트 생성법
+1. 프로젝트 폴더를 생성
+
+```
+mkdir MyApp
+cd Myapp
+```
+
+2. 이후 폴더안에 Project.swift파일을 생성한다. Project.swift는 우리 프로젝트의 메타 데이터를 담고있는 매니페스트 파일이다. 이 파일로 Tuist가 우리의 프로젝트가 어떻게 구성되기 원하는지를 알려줄 수 있습니다. 따라서 Project.swift라는 이름으로 새로 만들고 tuist edit 명령어를 실행합니다. 
+
+```
+touch Project.swift
+tuist edit
+```
+
+3. 다음과 같이 우리 프로젝트의 매니페스트를 작성합니다.
+
+```
+import ProjectDescription
+
+let project = Project(
+    name: "MyApp",
+    targets: [
+        Target(
+            name: "MyApp",
+            platform: .iOS,
+            product: .app,
+            bundleId: "com.choi.myapp",
+            infoPlist: .default,
+            sources: [
+                "Sources/**"
+            ],
+            resources: [
+                "Resources/**"
+            ]
+        )
+    ]
+)
+```
+
+4. Tuist는 소스 파일과 폴더를 자동으로 모두 만들어주지 않습니다. 그래서 우리는 매니페스트 파일이 참고할 Sources와 Reources폴더를 만들어야합니다. 
+
+```
+mkdir Sources
+mkdir Resources
+```
+
+5. Sources폴더에는 AppDelegate와 SceneDelegate등 Swift파일을 만들어서 넣고 Resources폴더에는 앱에 사용될 리소스 파일을 넣고 프로젝트를 생성합니다.
+
+```
+tuist generate
+```
+
+6. InfoPlist 설정
+
+```
+import ProjectDescription
+
+let infoPlist: [String: InfoPlist.Value] = [ // <1>
+    "UILaunchScreen": [:]
+]
+
+let project = Project(
+    name: "MyApp",
+    targets: [
+        Target(
+            name: "MyApp",
+            platform: .iOS,
+            product: .app,
+            bundleId: "com.sarunw.myapp",
+            infoPlist: .extendingDefault(with: infoPlist), // <2>
+            sources: [
+                "Sources/**"
+            ],
+            resources: [
+                "Resources/**"
+            ]
+        )
+    ]
+)
+```
+
+- InfoPlist 설정 이후 Launch Screen 값이 추가된것을 확인할 수 있다.
+
+<img width="870" alt="스크린샷 2021-11-16 오전 11 08 19" src="https://user-images.githubusercontent.com/45002556/141924508-a7a4618d-de1e-48b8-a90e-73e90147b243.png">
 
 ## 프로젝트 구조
 1. Project.swift
