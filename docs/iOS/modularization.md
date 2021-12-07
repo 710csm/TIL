@@ -50,3 +50,5 @@
 
 <img width="741" alt="스크린샷 2021-11-16 오후 4 02 23" src="https://user-images.githubusercontent.com/45002556/141936835-10c91308-434d-44af-9ef7-b9c203a150dd.png">
 
+## 어떤 Mach-O(Mach Object file format) 타입을 선택해야 할까?
+- 일반적으로 리소스를 스스로 가지고 있거나 전체 소스를 제공하는 경우 Dynamic Framework를, 그렇지 않고 SDK 형태로 배포하는 경우는 Static Framework를 선택합니다.
