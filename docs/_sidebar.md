@@ -60,6 +60,7 @@
     - [구글 로그인](라이브러리/GoogleLogin.md)
     - [페이스북 로그인](라이브러리/FaceBookLogin.md)
     - [Texture](라이브러리/Texture.md)
+    - [Resolver](라이브러리/Resolver.md)
 - etc
     - [디자인 패턴](etc/디자인패턴.md)
     - [Rest API와 소켓 통신의 차이점](etc/Rest_소켓_차이.md)
