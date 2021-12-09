@@ -18,6 +18,7 @@ dependencies: [
 
 ## 사용법
 - @Injected Property wrapper 키워드를 사용해 변수 앞에 선언해준다. 
+- let이 아닌 var로 선언해야 한다.
 
 ```Swift
 // 기존
@@ -53,6 +54,7 @@ defaultScope = .application
 ```  
 
 - .scope()를 통해 각 등록마다 scope를 지정할 수 있다.
+
 ```Swift
 register { URLSession(configuration: .default) }.scope(.graph)
 or
@@ -60,4 +62,12 @@ register { URLSession(configuration: .default) }.scope(.application)
 ```
 
 ## Registering Protocols
+- 인스턴스가 프로토콜 타입인경우에는 .implements를 사용해서 등록할 수 있다.
+- 다음 코드를 보면 NetworkService 유형의 object를 생성하지만 NetworkServiceProtocol의 유형으로 반한되기 때문에 NetworkService의 요구 사항을 만족할 수 있다. 
+
+```Swift
+@Injected private var ntworkService: NetworkServiceProtocol
+
+register { NetworkService() }.implements(NetworkServiceProtocol.self)
+```
 
