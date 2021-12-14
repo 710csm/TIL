@@ -1,4 +1,4 @@
-# class func vs staticfunc
+# class func vs static func
 
 스위프트에는 세가지 함수 종류가 있습니다. 앞에 붙는 키워드에 따라서 instance / class/ static으로 나타냅니다.
 

@@ -30,6 +30,30 @@ class ViewController: UIViewController {
 }
 ```
 
+## Quick Help
+- /// 를 통해 option + 마우스 좌클릭으로 파라미터, 함수를 눌렀을 때 나오는 설명을 작성할 수 있다.
+- 함수는 파라미터와 리턴 타입도 설명을 작성할 수 있다.
+
+```Swift
+/// 파라미터 설명
+let value: Int = 0
+
+/// 무슨 역할을 하는지 작성
+/// - Parameter string: 첫번째 파라미터
+/// - Parameter string: 두번째 파라미터
+/// - Returns:Int
+func quickHelpTest(num1: Int, num2: Int) -> String {
+    let temp = num1 + num2
+    return "\(temp)"
+}
+```
+
+- 각 결과를 확인할 수 있다.
+
+<img width="488" alt="스크린샷 2021-12-14 오후 5 10 47" src="https://user-images.githubusercontent.com/45002556/145958406-a8107c75-1e90-45b2-ad07-40850254bfd2.png">
+
+<img width="482" alt="스크린샷 2021-12-14 오후 5 11 21" src="https://user-images.githubusercontent.com/45002556/145958505-32184179-7f11-40ae-b2e8-aedaa68ebb66.png">
+
 ## 마크업
 
 ### MARK

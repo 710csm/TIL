@@ -68,7 +68,7 @@ estimatedRowHeight에서는 셀의 예측 높이값을 리턴한다. 이렇게 �
 - 뷰컨트롤러에게 그 자식뷰의 레이아웃을 조정하는 것에 대한 것을 알려주기 위해 호출된다. 이 메소드는 frame이 바뀔때마다 호출된다.
 
 **viewDidLayoutSubview**
-- 뷰가 그 자식 뷰의 레이아웃에 영향을 준 것을 뷰컨트롤러에게 알려주기 위해 허출된다. 뷰가 그 잣긱 view의 레이아웃을 바꾸고난 뒤에 추가적인 변경을 하고 싶을때 사용하는 이벤트 함수
+- 뷰가 그 자식 뷰의 레이아웃에 영향을 준 것을 뷰컨트롤러에게 알려주기 위해 호출된다. 뷰가 그 잣긱 view의 레이아웃을 바꾸고난 뒤에 추가적인 변경을 하고 싶을때 사용하는 이벤트 함수
 
 **viewDidAppear**
 - 뷰가 나타났다는 것을 컨트롤러에게 알리는 역할을 한다. 호출되는 시점으로는 뷰가 화면에 나타난 직후에 실행된다.
@@ -134,36 +134,6 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     }
 }
 ```
-
----
-
-## ViewController의 생명주기
-
-![viewLifeCycle](https://user-images.githubusercontent.com/45002556/108618534-7399ac00-7462-11eb-9753-2c66dca88bd9.png)
-
-**loadView**
-- 컨트롤러가 관리하는 뷰를 만든다. 뷰컨트롤러가 생성되고 순차적으로 완성됐을 때만 호출된다.
-
-**viewDidLoad**
-- 컨트롤러의 뷰가 메모리에 올라간 뒤에 호출된다. 뷰가 생성될 때만 호출된다.
-
-**viewWillAppear**
-- 화면에 뷰가 표시될 때마다 호출된다. 이 단계는 뷰는 정의된 바운드를 가지고 있지만 화면. 회전은 적용되지 않는다.
-
-**viewWillLayoutSubviews**
-- 뷰컨트롤러에게 그 자식뷰의 레이아웃을 조정하는 것에 대한 것을 알려주기 위해 호출된다. 이 메소드는 frame이 바뀔때마다 호출된다.
-
-**viewDidLayoutSubview**
-- 뷰가 그 자식 뷰의 레이아웃에 영향을 준 것을 뷰컨트롤러에게 알려주기 위해 허출된다. 뷰가 그 잣긱 view의 레이아웃을 바꾸고난 뒤에 추가적인 변경을 하고 싶을때 사용하는 이벤트 함수
-
-**viewDidAppear**
-- 뷰가 나타났다는 것을 컨트롤러에게 알리는 역할을 한다. 호출되는 시점으로는 뷰가 화면에 나타난 직후에 실행된다.
-
-**viewWillDisAppear**
-- 뷰가 사라지기 직전에 호출되는 함수이다. 뷰가 삭제 되려고 하고있는 것을 viewController에게 알린다.
-
-**viewDidDisappear**
-- ViewController에게 view가 제거되었음을 알린다. 호출 시점은 viewWillDisAppear 다음에 호출된다.
 
 ---
 
