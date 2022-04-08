@@ -17,7 +17,7 @@
 ## 사용법
 - Main
     - UI와 관련된 작업은 모두 main큐를 통해서 수행하며 Serial Queue에 해당된다.
-    - MainQueueFMF sync 메서드로 동작시키면 Dead Lock 상태에 빠진다.
+    - MainQueue를 sync 메서드로 동작시키면 Dead Lock 상태에 빠진다.
 
 ```Swift
 DispatchQueue.main.async { }
