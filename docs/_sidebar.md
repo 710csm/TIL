@@ -71,4 +71,4 @@
     - [github](etc/github.md)
     - [동기와 비동기](etc/Manipulation.md)
     - [Xcode Merge Conflict](etc/xcode_merge.md)
-
+    - [빅오 표기법](etc/BigO.md)
