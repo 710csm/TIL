@@ -75,3 +75,30 @@
     - 함수를 비동기 함수로 만들겠다고 알린다.
 2. await
     - 비동기 함수 호출시 잠재적인 일시 중단 지점(potential suspension point)을 지정 
+
+## 이미지 확대 방법
+1. 스크롤뷰 사용
+- UIScrollViewDelegate를 상속받아 maximumZoomScale 및 minimumZoomScale 값을 설정하여 이미지 확대를 구현할 수 있다. 
+
+```swift
+class ViewController: UIViewController, UIScrollViewDelegate {
+
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var imgPhoto: UIImageView!
+      
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        scrollView.delegate = self
+            
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 6.0        
+    }  
+        
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imgPhoto
+    }
+```
+
+2. CGAffineTransformMakeScale 사용
+- 
