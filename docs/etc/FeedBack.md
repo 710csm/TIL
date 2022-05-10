@@ -100,5 +100,22 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
 ```
 
-2. CGAffineTransformMakeScale 사용
-- 
+2. UIImageView를 extension 해서 하는 방법
+- 핀치 줌 제스쳐를 추가해 이미지의 스케일을 변경하여 확대한다.
+
+```swift
+extension UIImageView {
+    func enableZoom() {
+        let pinchGesture = UIPinchGestureReconizer(target: self, action: #selector(startZooming(_:)))
+        isUserInteractionEanbled = true
+        addGestureRecognizer(pinchGesture)
+    }
+    
+    @objc private func startZooming(_ sender: UIPinchGestureRecognizer) {
+        let scaleResult = sender.view?.transform.scaledBy(x: sender.scale, y: sender.scale)
+        guard let scale = scaleResult, scale.a > 1, scale.b > 1 else { return }
+        sender.view?.transform = scale
+        sender.scale = 1
+    }
+}
+```   
