@@ -74,3 +74,4 @@
     - [Xcode Merge Conflict](etc/xcode_merge.md)
     - [빅오 표기법](etc/BigO.md)
     - [질문 피드백](etc/FeedBack.md)
+    - [Jenkins 및 fastlane을 활용한 CI/CD](etc/cicd.md)
