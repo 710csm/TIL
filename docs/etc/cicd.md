@@ -143,3 +143,72 @@ gem install fastlane
 
 ## Fastlane 설치 오류 (Gem::FilePermissionError)
 - 참고 https://jojoldu.tistory.com/288
+
+## Fastlane 설정
+- 프로젝트 폴더로 가서 fastlane 초기화를 한다
+
+```
+fastlane init
+```
+
+- 이후 프로젝트 폴더에 Gemfile, Gemfile.lock 파일과 fastlane 폴더가 생긴것을 확인할 수 있다.
+- fastlane 폴더에 있는 Fastfile에 유닛 테스트 및 배포용 lane을 작성한다.
+
+```
+default_platform(:ios)
+platform :ios do
+  # cocoapods 설치용 메소드 
+  def install_pods
+    cocoapods(
+        clean: true,
+        podfile: "Podfile",
+        try_repo_update_on_error: true
+    )
+  end
+
+  # iOS 앱 유닛 테스트용 lane
+  desc "run test according to the rules in fastlane configuration file by push commit/merge/tag only on develop branch"
+  lane :unit_test do
+    scan(
+        scheme: ENV['프로젝트명'],
+        output_directory: "fastlane/tests", # 결과 로그를 저장할 폴더 경로
+        devices: ["iPhone 8 Plus", "iPhone 12 Pro"], # 테스트 디바이스 설정
+        clean: true
+    )
+  end
+
+  # 빌드 테스트용 lane
+  desc "run build according to the rules if fastlane configuration file by push commit/merge/tag only on develop branch"
+  lane :build_test do
+    gym(
+        scheme: ENV['프로젝트명'],
+        silent: true,
+        clean: true
+    )
+  end
+
+  # TestFlight 업로드용 lane
+  desc "upload to TestFlight"
+  lane :upload_testflight do
+    build_app(workspace: "프로젝트명.xcworkspace", scheme: "프로젝트명")
+    upload_to_testflight
+  end
+end
+```
+
+## Fastlane 실행을 위한 Jenkins 설정
+- 프로젝트 설정에서 기존에 빌드 테스트 코드 수정
+
+```
+fastlane unit_test
+
+or
+
+/usr/local/bin/fastlane unit_test
+```
+
+
+- Set Locale to UTF-8 에러시 Jenkins관리 - 시스템 설정에 Global properties 값을 추가
+
+<img width="1007" alt="스크린샷 2022-06-21 오전 9 57 54" src="https://user-images.githubusercontent.com/45002556/174694738-e0e13275-c314-4405-af57-c81470a30a7f.png">
+
