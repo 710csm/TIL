@@ -54,7 +54,7 @@
     - [SnapKit](라이브러리/Snapkit.md)
     - [SwiftLint](라이브러리/SwiftLint.md)
     - [Kingfisher](라이브러리/Kingfisher.md)
-    - [Nimble](라이브러리/Nimble.md)
+    - [Quick+Nimble](라이브러리/Nimble.md)
     - [Reachability](라이브러리/Reachability.md)
     - [Crashlytics](라이브러리/Crashlytics.md)
     - [Then](라이브러리/Then.md)
