@@ -536,6 +536,100 @@ driver는 스트림을 공유할 수 있다.
 
 ---
 
+# Skip
+
+## skip(_ count: Int)
+- count의 수만큼 시퀀스에서 발생하는 이벤트를 받지 않고 넘어갈 수 있다.
+
+```swift
+let disposedBaG = DisposeBag()
+
+Observable.of("A","B", "C", "D", "E", "F")
+    .skip(3)
+    .subscribe(onNext: {
+        print($0)
+    })
+    .disposed(by: disposedBag)
+
+// 결과
+D
+E
+F
+```
+
+## skip(while: (T) throws -> Bool) -> Observable<T>
+- skip(while:)은 filter와 유사하다. filter는 조건을 통과하는 element만 전달되는 반면, skip(while:)은 조건을 통과하지 못한 element를 전달하게 된다.
+
+ ```swift
+let disposedBaG = DisposeBag()
+
+Observable.of(2, 2, 3, 4, 4)
+    .skip(while: { integer in
+        integer % 2 == 0
+    })
+    .subscribe(onNext: {
+        print($0)
+    })
+    .disposed(by: disposedBag)
+
+// 결과
+3
+4
+4
+```
+
+## skip(until: ObservableType)
+- 두개의 시퀀스를 사용하여 하나의 시퀀스에서 계속 이벤트가 발생하고 있고 두 번째 시퀀스를 첫 번째 시퀀스의 트리거로 사용한다. 즉 두 번째 시퀀스의 이벤트가 발생하면 첫 번째 시퀀스가 emit된다.
+
+```swift
+let disposedBag = DisposedBag()
+
+let subject = PublishSubject<String>()
+let trigger = PublishSubject<String>()
+
+subject
+    .skipUtil(trigger)
+    .subscribe(onNext: {
+        print($0)
+    })
+    .disposed(by: disposedBag)
+
+subject.onNext("A")
+subject.onNext("B")
+
+trigger.onNext("trigger")
+
+subject.onNext("C")
+
+// 결과
+C
+```
+
+---
+
+# Take
+- Observable에서 내보낸 아이템 중, 처음 n개의 아이템만 내보내준다.
+- 아이템이 여러번 방출될 수 있는 Observable에서 한번만 방출 되도록 제한한다.
+
+<img width="700" alt="스크린샷 2022-10-20 오후 2 50 23" src="https://user-images.githubusercontent.com/45002556/196866633-3ca70ab9-ecdd-4420-8696-28ac6ca2bae9.png">
+
+```swift
+let disposedBag = DisposedBag()
+
+Observable.of(1,2,3,4)
+    .take(2)
+    .subscribe(onNext: {
+        print($0)   
+    })
+    .disposed(by: disposedBag) 
+
+// 결과
+1
+2
+```
+ 
+---
+
 # RxSwift/RxCocoa를 사용한 TableView 설정
 -  BehaviorRelay를 사용하여 TableView의 UI를 설정
 
