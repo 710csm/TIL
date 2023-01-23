@@ -1,7 +1,57 @@
 # Tuist
-- Xcode로 개발시 .xcodeproj 파일 때문에 git에서 merge시 conflict가 자주 일어난다. 또한 모듈화시 의존성이 많아질 경우 제어가 힘들어진다. 따라서 더 효율적인 관리를 위해 tuist를 사용할 수 있다. tuist와 비슷한 툴로 XcodeGen이 있다.
-- XcodeGen은 yml이나 json으로 프로젝트를 설정하지만 tuist는 Project.swift라는 Swift파일로 설정 관리를 한다. tuist가 XcodeGen보다 초기 프로젝트 설정은 더욱 편리하다.
+- Xcode로 개발시 .xcodeproj의 레퍼런스가 변경되고 UUID가 바뀌기 때문에 Git Conflict가 자주 일어난다. 특히 새로운 파일 생성 및 제거, 정렬, 폴더링에서 자주 발생한다. 또한 모듈화시 의존성이 많아질 경우 제어가 힘들어진다. 따라서 더 효율적인 관리를 위해 Tuist를 사용할 수 있다. Tuist와 비슷한 툴로는 XcodeGen이 있다.
+- XcodeGen은 yml이나 json으로 프로젝트를 설정하지만 Tuist는 Project.swift라는 Swift파일로 설정 관리를 한다. 또한 멀티 프로젝트 관리가 어렵고 의존성 캐싱을 따로 관리해야 한다. 따라서 Tuist가 XcodeGen보다 초기 프로젝트 설정은 더욱 편리하다.
 
+## Tuist 장점
+1. 프로젝트 설정 파일을 Xcode 내에서 Swift로 작성하고 관리할 수있다.
+    - tuist edit을 사용하면 별도의 프로젝트(Manifests)로 Tuist 설정과 관련된 파일을 한번에 관리할 수 있다.
+    - 함수, 변수, enum, extension 등 Swift가 제공하는 기능과 타이포 감지, 자동 완성, 빌드 등 Xcode에서 제공하는 기능도 사용할 수 있어 yml로 스크립트를 작성하는 것보다 훨씬 효율적으로 작업할 수 있습니다.
+
+```Swift
+extension Project {
+    public static func makeInterfaceTargets(name: String) -> [Target] {
+        let source = Target(name: name)
+        return [source]
+    }
+}    
+
+// Project Extension에 구현된 함수를 사용해서 간단하게 만들어 사용할 수 있습니다.
+let interfaceTargets = Project.makeInterfaceTargets(name: "AppCore_DesignSystem")
+let project = Project(
+    name: "AppCore_DesignSystem"
+    // ...
+    targets: interfaceTargets + ...
+)   
+```
+
+2. Tuist 3.x 부터는 Tuist Dependencies를 지원해 외부 라이브러리 의존성 캐싱을 쉽게 관리할 수 있다.
+    - Tuist 3.x 부터 의존성 캐싱 기능을 지원합니다. XcodeGen과 달리 Tuist는 외부 라이브러리 의존성과 그 외 모듈 의존성을 함께 관리할 수 있습니다.
+
+```Swift
+public extension Package {
+    static let ReactorKit = Package.remote(repo: "ReactorKit/ReactorKit")
+}
+
+// 이렇게 Dependencies에 등록해 놓으면 외부 라이브러리의 의존성이 캐싱됩니다.
+let dependencies = Dependencies(
+    swiftPackageManager: SwiftPackageManagerDependencies([Package.ReactorKit])
+)
+
+// 아래와 같이 슈가를 사용해 모듈에 필요한 의존성 전체를 Tuist 내에서 관리할 수 있습니다.
+let targets = Project.makeFrameworkTargets(
+    // ...
+    dependencies: [
+        .spm.ReactorKit, // 외부 라이브러리
+        .workspace.shared.foundation, // 직접 제작한 모듈
+    ]
+)
+```
+
+3. Workspace 내 타겟 의존성 그래프를 손쉽게 그릴 수 있고 이를 통한 모듈간 의존성 관리가 편해진다.
+    - tuist graph를 사용하면, 아래와 같은 그래프를 그릴 수 있고, 각 모듈의 Mach-O 타입, 모듈간의 의존성 등을 확인할 수 있어 Modular Architecture를 설계하거나 모듈 사이에서 일어날 수 있는 Circular Dependency, Static Library 중복 적재와 같은 문제를 발견하는데 유용하게 사용할 수 있다.
+
+![image](https://user-images.githubusercontent.com/45002556/214024105-05aea19f-0d4c-4723-9a44-895a1dbc8b16.png)
+***Tuist 공식 문서에 첨부된 이미지***
 
 ## 설치법
 
@@ -91,6 +141,7 @@ tuist lint project
 ```
 
 8. 프로젝트 생성
+
 ```
 tuist generate
 ```
@@ -193,6 +244,12 @@ Tuist는 Project description helper를 지원합니다. 기본으로 정의된 �
 
 2. Derived 폴더
 - Info.plist 파일과 Bundle 관련 코드가 들어있는 폴더
+
+## Tuist로 전환시 고려할점
+1. Xcode의 설정을 Tuist에 적용
+2. 오픈 소스 라이브러리를 SPM과 Carthage로 전환
+3. CI/CD 환경을 Tuist 맞춤으로 수정
+4. Next-Gen 모듈 구조를 적용하며 모듈 단위로 
 
 ## Add Tuist badge
 [![Tuist badge](https://img.shields.io/badge/Powered%20by-Tuist-blue)](https://tuist.io) 
