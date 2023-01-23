@@ -255,4 +255,7 @@ Tuist는 Project description helper를 지원합니다. 기본으로 정의된 �
 [![Tuist badge](https://img.shields.io/badge/Powered%20by-Tuist-blue)](https://tuist.io) 
 
 ## 참고
-[Tuist 문서](https://docs.tuist.io)
+[Tuist 문서](https://docs.tuist.io)   
+[29CM 기술 블로그](https://medium.com/29cm/tuist-%EB%A1%9C-%EA%B0%80%EB%8A%94-%EC%97%AC%EC%A0%95-part-1-xcodegen-%EC%97%90%EC%84%9C-tuist-%EB%A1%9C-%EC%A0%84%ED%99%98%ED%95%98%EA%B8%B0-886260144b37)   
+[29CM 기술 블로그](https://medium.com/29cm/tuist-%EB%A1%9C-%EA%B0%80%EB%8A%94-%EC%97%AC%EC%A0%95-part2-tuist-%EC%97%90%EC%84%9C-%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0-8d1bb7efb941)   
+[하이퍼커넥트 기술 블로그](https://hyperconnect.github.io/2022/04/19/ios-modularization.html)   
