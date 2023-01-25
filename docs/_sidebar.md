@@ -72,7 +72,8 @@
 - etc
     - [디자인 패턴](etc/디자인패턴.md)
     - [Rest API와 소켓 통신의 차이점](etc/Rest_소켓_차이.md)
-    - [github](etc/github.md)
+    - [Github](etc/github.md)
+    - [Git Commit Message](etc/GitCommitMessage.md)
     - [동기와 비동기](etc/Manipulation.md)
     - [Xcode Merge Conflict](etc/xcode_merge.md)
     - [빅오 표기법](etc/BigO.md)
