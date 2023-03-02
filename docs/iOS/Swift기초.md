@@ -459,7 +459,8 @@ someClosure {
 ### 3. Escaping Closures
 - 클로저를 함수의 파라미터로 넣을 수 있는데, 함수가 끝나고 실행되는 클로저이다.
 - 비동기로 실행되거나 completionHandler로 사용되는 클로저는 파라미터 타입 앞에 @escaping이라는 키워드를 명시해야 한다.
-- - @escaping 를 사용하는 클로저에서는 self를 명시적으로 언급해야 한다.
+- @escaping 를 사용하는 클로저에서는 self를 명시적으로 언급해야 한다.
+
 ```Swift
 class SomeClass {
     var x = 10
@@ -501,19 +502,77 @@ class SomeClass {
 ---
 
 ## Swift에서 Class와 struct의 차이는 무엇인가요?
+**공통점**
+- 값을 저장할 프로퍼티를 선언할 수 있습니다.
+- 함수적 기능을 하는 메소드를 선언할 수 있습니다.
+- 내부 값에 "."을 사용하여 접근할 수 있습니다.
+- 생성자를 사용해 초기 기능을 확장할 수 있습니다.
+- extension을 사용하여 기능을 확장할 수 있습니다.
+- protocol을 채택하여 기능을 설정할 수 있습니다.
+
 **Class-Referentce type**
+- 참조 타입이다.
+- 상속이 가능가능하다.
+- 대입 연산 시 레퍼런스가 복사되어 할당된다.
+- 같은 클래스 인스턴스를 여러 개의 변수에 할당한 뒤 값을 변경시키면 할당한 모든 변수에 영향을 준다.
+- 타입 캐스팅을 통해 런타임에서 클래스 인스턴스의 타입을 확인할 수 있다.
 - 객체화 시 힙 메모리 영역에 저장되며 ARC로 객체의 메모리 해제가 관리된다.
-- 대입 연산 시 레퍼런스가 복사되어 할당됨
-- 멀티 스레딩 시 적절한 Lock 활용이 필요
-- 상속 가능
-![classReference](https://user-images.githubusercontent.com/45002556/108618550-844a2200-7462-11eb-9830-68d30ea83d65.png)
+- 또한 힙 영역은 한 프로세스의 스레드들이 함께 공유하는 영역이기 때문에 Thread-Safe를 보장하지 않는다.
+
+```Swift
+class Person {
+    var name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+
+var jack = Person(name: "Jack")
+var emma = jack
+ema.name = "emma"
+
+print(jack.name)
+print(emma.name)
+
+// 결과
+emma
+emma
+```
 
 **Struct-Value type**
 - 대입 연산시 값 자체가 복제되어 할당됨(공유가 불가)
-- 불변성 구현에 유리
-- 멀티스레딩에 안전함
+- 구조체 변수를 새로운 변수에 할당할 때마다 새로운 구조체가 할당됩니다.
+- 즉 같은 구조체를 여러개의 변수에 할당한 뒤 값을 변경시키더라도 다른 변수에 영향을 주지 않는다.
+- 메모리의 스택 영역을 사용한다. 스택 영역은 각 스레드가 독립적으로 사용하기 때문에 Thread-Safe 하다는 특징이 있다.
 - 상속이 불가능 (프로토콜은 사용 가능)
-![structValue](https://user-images.githubusercontent.com/45002556/108618553-86ac7c00-7462-11eb-83fe-60679c27cac3.png)
+
+```Swift
+struct Person {
+    var name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+
+var jack = Person(name: "Jack")
+var emma = jack
+ema.name = "emma"
+
+print(jack.name)
+print(emma.name)
+
+// 결과
+jack
+emma
+```
+
+**구조체를 사용해야 하는 경우**
+- 연관된 간단한 값의 집합을 캡슐화 하는 것만이 목적일 때
+- 캡슐화한 값을 참조하는 것보다 복사하는 것이 합당할 때
+- 다른 타입으로부터 상속받거나 자신을 상속할 필요가 없을 때
+- identyfy를 제어하지 않을 때 구조체를 사용
 
 ---
 
