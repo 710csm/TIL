@@ -48,18 +48,29 @@
     - Client Credentials Grant
 
 ## http1 vs http2의 차이
-1. HTTP/1.1은 기본적으로 연결당 하나의 요청과 응답을 처리하기 때문에 동시전송 문제와 다수의 리소스를 처리하기에 속도와 성능 이슈를 가지고 있다. 그래서 HOL(Head Of Line) Blocking-특정 응답지연, RTT(Round Trip Time) 증가, 헤비한 헤더 구조라는 문제점을 가지고 있습니다.
-2. HTTP2는 성능뿐만 아니라 속도면에서도 월등하다. Multiplex Streams(한 커넥션에 여러개의 메세지를 동시에 주고 받을 수 있음), Stream Prioritization(요청 리소스간 의존관계를 설정), Server Push 등을 사용하여 성능을 획기적으로 향상 시켰다
+- HTTP/1.1은 기본적으로 연결당 하나의 요청과 응답을 처리하기 때문에 동시전송 문제와 다수의 리소스를 처리하기에 속도와 성능 이슈를 가지고 있다. 그래서 HOL(Head Of Line) Blocking-특정 응답지연, RTT(Round Trip Time) 증가, 무거운 헤더 구조라는 문제점을 가지고 있습니다.
+- HTTP2는 성능뿐만 아니라 속도면에서도 월등하다. Multiplex Streams(한 커넥션에 여러개의 메세지를 동시에 주고 받을 수 있음), Stream Prioritization(요청 리소스간 의존관계를 설정), Server Push 등을 사용하여 성능을 획기적으로 향상 시켰다
 
 <img width="658" alt="스크린샷 2022-08-17 오전 11 38 33" src="https://user-images.githubusercontent.com/45002556/222997614-48ba6853-7573-4f06-b4e4-649ba15d0df2.png">
 
 ## HTTP의 GET/POST의 차이점
 - GET: 요청을 전송할 때 필요한 데이터를 Body에 담지 않고, 쿼리스트링을 통해 전송한다. URL의 끝에 ?와 함께 이름과 값으로 쌍을 이루는 요청 파라미터를 쿼리스트링이라 부른다. 요청 파라미터가 여러개면 &로 연결한다.
-    1. GET은 캐시가 가능하다.
+    1. GET은 불필요한 요청을 제한하기위해 캐시가 가능하다.
     2. GET 요청은 브라우저 히스토리에 남는다.
-    3. GET 요청은 길이 제한이 있다.
+    3. GET 요청은 데이터 길이 제한이 있다.
     4. GET 요청은 중요한 정보를 다루면 안된다.
+    5. GET 요청을 북마크에 추가할 수 있다.
+    6. GET 요청은 idempotent 하다.
 - POST: 리소스를 생성/변경하기 위해 설계 되었기 때문에 GET과 달리 전송해야할 데이터를 HTTP 메소드의 Body에 담아서 전송합니다. HTTP 메시지의 Body는 길이의 제한없이 데이터를 전송할 수 있습니다. 따라서 POST는 대용량 데이터를 전송할 수 있다. 그리고 POST로 요청을 보낼 때는 요청 헤더의 Content-Type에 요청 데이터의 타입을 표시해야 한다.
     1. POST 요청은 캐시되지 않는다.
     2. POST 요청은 브라우저 히스토리에 남지 않는다.
     3. POST 요청은 데이터 길이에 제한이 없다.
+    4. GET 요청은 idempotent 하지 않다.
+    5. GET 방식보다 속도가 상대적으로 느리다.
+
+### idempotent란?
+- 멱등법칙 또는 멱등성이란 뜻으로, 수학이나 전한학에서 연산의 한 성징을 나타내는 것으로, 연산을 여러 번 적용하더라고 결과가 달라지지 않는 성질을 의미한다.
+
+### GET/POST의 차이점 정리 
+
+<img width="783" alt="스크린샷 2023-03-27 오전 9 10 49" src="https://user-images.githubusercontent.com/45002556/227813725-6cb68122-dd02-4aab-b2d0-4eb0425b893a.png">
