@@ -546,6 +546,7 @@ emma
 - 즉 같은 구조체를 여러개의 변수에 할당한 뒤 값을 변경시키더라도 다른 변수에 영향을 주지 않는다.
 - 메모리의 스택 영역을 사용한다. 스택 영역은 각 스레드가 독립적으로 사용하기 때문에 Thread-Safe 하다는 특징이 있다.
 - 상속이 불가능 (프로토콜은 사용 가능)
+- struct는 생성자가 자동으로 생성되며, 초기화 과저에서 값을 할당할 수 있다.
 
 ```Swift
 struct Person {
@@ -574,6 +575,8 @@ emma
 - 다른 타입으로부터 상속받거나 자신을 상속할 필요가 없을 때
 - identyfy를 제어하지 않을 때 구조체를 사용
 
+따라서, class는 상속, 참조 타입, 초기화, 메모리 관리 등 다양한 기능을 제공하지만, struct는 간단하고 복사 타입으로서 사용하기 적합하다. 개발자는 자신의 요구사항에 따라 적절한 데이터 타입을 선택해야 한다.
+
 ---
 
 ## Swift - Codable
@@ -600,3 +603,55 @@ let num2 = 15.0     // Float이 아닌 Double로 타입 지정, Float으로 지�
 var str: String
 var num: Float
 ```
+
+---
+
+## Swift와 Objective-C의 차이점
+1. Header와 Implementation의 존재 여부
+    - Swift는 .swift 파일 하나만 있으면 된다.
+    - Objective-C로 개발하는 프로젝트를 실행 시키면 아래 사진과 같이 .h와 .m파일이 있다.
+    <img width="378" alt="스크린샷 2022-08-18 오후 3 14 56" src="https://user-images.githubusercontent.com/45002556/227821855-c266cdaa-d6b7-49c9-b428-5cba25b269dd.png">   
+2. 포인터 사용 및 타입 유추
+    - Objective-C는 클래스를 사용할 때 포인터를 반드시 사용해줘야 한다. int, double, float과 같은 자료형은 포인터를 필요로 하지 않는다.
+    - 포인터를 신경 써서 개발한다는 것은 메모리를 언제 할당하고 언제 해제해야 하는지에 대해 신경 써야한다는 의미로 Swift를 사용하면 Objective-C보다 쉽게 개발을 할 수 있다.
+
+```Objective-C
+@property NSString * name;
+@property NSString * number;
+@property int schollD;
+```    
+
+```Swift
+let name: String = ""
+let number: Int = 0
+```    
+
+3. 메소드 호출 방법
+    - Swift는 단순하게 메소드 명과 괄호를 써서 호출할 수 있지만 Objective-C는 []를 써야 호출할 수 있다.
+
+```Objective-C
+[self someMethod];
+```
+
+```Swift
+someMethod()
+```
+
+4. 앱 라이프 사이클
+- Swift는 앱의 실행을 보면 알 수 있는거처럼 AppDelegate @main 함수로부터 실행이 됩니다. 따라서 앱이 실행되면 main에서붙처 실행이 되고 그 후에 AppDelegate를 수행시킨다. 그리고 우리는 @main 함수를 뜯거나 볼 수 없습니다.
+- Objective-C는 main 함수가 따로 있고 이 함수를 시작으로 UIApplicationMain이 수행되고 그 후에 AppDelegate가 수행된다.
+
+### ChatGPT에게 물어본 Swift와 Objective-C의 차이점
+- 문법적 차이점: Objective-C는 C 언어와 호환되는 문법을 사용하며, 객체 지향적인 요소들은 "@interface"와 "@implementation"을 이용한 방법으로 구현됩니다. 반면에, Swift는 C와는 거의 관련이 없는 새로운 문법을 사용합니다. 예를 들어, Objective-C의 "nil"은 Swift에서 "nil" 대신 "Optional"로 대체됩니다.
+
+- 속도: Swift는 Objective-C보다 약 2배 빠릅니다. 이는 Swift가 C와 C++를 기반으로 하기 때문입니다.
+
+- 안정성: Swift는 안정적이며, 애플의 프로그래밍 언어로 공식적으로 지원됩니다. Objective-C는 오랫동안 사용되어 왔기 때문에 매우 안정적이지만, 일부 레거시 코드에서는 문제가 발생할 수 있습니다.
+
+- 코드 가독성: Swift는 간결하고 읽기 쉬운 문법을 사용합니다. 이를 통해 코드의 가독성이 향상되고 유지 보수성이 증가합니다. Objective-C는 비교적 번잡한 구문을 가지고 있으며, 코드가 길어지고 복잡해지기 쉽습니다.
+
+- 상호 운용성: Swift와 Objective-C는 Cocoa와 Cocoa Touch 프레임워크와 완벽하게 호환됩니다. 이를 통해 Objective-C 기반의 코드와 Swift 기반의 코드가 함께 사용될 수 있습니다.
+
+- 러닝커브: Swift는 Objective-C보다 상대적으로 쉽게 학습할 수 있습니다. Swift는 더 간결한 문법과 더 안전한 기능을 제공합니다. Objective-C는 많은 유명한 iOS 앱들이 사용하고 있어, 일부 기업에서는 여전히 Objective-C를 사용하고 있습니다.
+
+- 따라서, 어떤 언어를 선택할지는 프로젝트의 요구사항과 개발자의 선호도에 따라 다르게 결정됩니다. Swift는 최근에 출시되었으며, 애플이 이를 적극적으로 지원하고 있기 때문에 미래에는 Swift가 더 많이 사용될 것으로 예상됩니다.
