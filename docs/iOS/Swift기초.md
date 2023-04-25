@@ -583,6 +583,37 @@ emma
 
 - Codable protocol은 Json, plist 등으로 이루어진 데이터를 편리하게 객체로 변환해주는 protocol입니다.
 
+## Swift의 해쉬값
+1. int optional과 string optional - nil값의 hash값이 동일한지?
+
+```Swift
+var number: Int? = nil
+var text: String? = nil
+```
+
+- Swift에서 Int와 String은 Hashable 프로토콜을 구현합니다. Hashable 프로토콜을 구현한 타입은 해당 타입의 인스턴스에 대해 해시 값을 계산할 수 있습니다. 따라서, Int와 String 타입의 인스턴스들은 해시 값을 계산할 수 있습니다. 이 때 nil 값은 Optional 타입의 인스턴스에 대해 nil 해시 값을 가지도록 구현되어 있습니다. 
+- 따라서, number와 text 변수 모두 nil 값을 가지므로, 이들의 해시 값은 동일합니다. 즉, number.hashValue == text.hashValue가 성립합니다.
+
+2. Optional<Int>.none.hashValue == Optional<String>.none.hashValue 값은 동일한가?
+
+```Swift
+let optionalInt = Optional<Int>.none
+let optionalString = Optional<String>.none
+```
+
+- Swift에서 Optional은 Hashable 프로토콜을 구현합니다. Optional 타입에 대해서는 nil 값을 가지는 경우에 대해 별도의 해시 값을 지정하여 일관성 있게 동작하도록 합니다.
+- 따라서, optionalInt와 optionalString 변수 모두 nil 값을 가지므로, 이들의 해시 값은 동일합니다. 즉, optionalInt.hashValue == optionalString.hashValue가 성립합니다. 
+- 이러한 해시 값의 일관성은 Optional 타입이 해시 테이블과 같은 자료구조에서 사용될 때 유용합니다. Optional 값이 nil일 경우, 해당 요소가 특정 버킷에 할당되도록 보장할 수 있습니다
+
+3. Optional<Int>.some(10).hashValue == Int(10).hashValue의 값은 동일한가?
+
+```Swift
+let optionalIntValue = Optional<Int>.some(10)
+let intValue = Int(10)
+```
+
+- optionalIntValue와 intValue는 값이 같지만, 타입이 다릅니다. optionalIntValue는 Optional 타입이며, .some 케이스에 실제 값이 포함되어 있습니다. 반면 intValue는 Int 타입의 인스턴스이며, Optional 타입이 아닙니다.
+- Swift에서 Optional 타입은 실제 값과 함께 Optional 값의 래핑 상태를 나타내기 때문에, Optional 값의 해시 값은 래핑 상태와 실제 값에 모두 의존합니다. 따라서, optionalIntValue와 intValue는 같은 값이지만 Optional과 Int의 타입이 다르기 때문에 서로 다른 해시 값을 가지게 됩니다.
 
 ## Type Inference vs Type Annotaion
 1. Type Inference
