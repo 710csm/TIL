@@ -65,29 +65,28 @@ estimatedRowHeight에서는 셀의 예측 높이값을 리턴한다. 이렇게 �
 ## ViewController의 생명주기
 ![viewLifeCycle](https://user-images.githubusercontent.com/45002556/108618534-7399ac00-7462-11eb-9753-2c66dca88bd9.png)
 
-**loadView**
-- 컨트롤러가 관리하는 뷰를 만든다. 뷰컨트롤러가 생성되고 순차적으로 완성됐을 때만 호출된다.
+- loadView: 컨트롤러가 관리하는 뷰를 만든다. 뷰컨트롤러가 생성되고 순차적으로 완성됐을 때만 호출된다. 
+- viewDidLoad: 컨트롤러의 뷰가 메모리에 올라간 뒤에 호출된다. 뷰가 생성될 때만 호출된다.
+- viewWillAppear: 화면에 뷰가 표시될 때마다 호출된다. 이 단계는 뷰는 정의된 바운드를 가지고 있지만 화면. 회전은 적용되지 않는다.
+- viewWillLayoutSubviews: 뷰컨트롤러에게 그 자식뷰의 레이아웃을 조정하는 것에 대한 것을 알려주기 위해 호출된다. 이 메소드는 frame이 바뀔때마다 호출된다.
+- viewDidLayoutSubview: 뷰가 그 자식 뷰의 레이아웃에 영향을 준 것을 뷰컨트롤러에게 알려주기 위해 호출된다. 뷰가 그 잣긱 view의 레이아웃을 바꾸고난 뒤에 추가적인 변경을 하고 싶을때 사용하는 이벤트 함수
+- viewDidAppear: 뷰가 나타났다는 것을 컨트롤러에게 알리는 역할을 한다. 호출되는 시점으로는 뷰가 화면에 나타난 직후에 실행된다.
+- viewWillDisAppear: 뷰가 사라지기 직전에 호출되는 함수이다. 뷰가 삭제 되려고 하고있는 것을 viewController에게 알린다.
+- viewDidDisappear: ViewController에게 view가 제거되었음을 알린다. 호출 시점은 viewWillDisAppear 다음에 호출된다.
+- viewWillAppear → viewWillLayoutSubviews → viewDidLayoutSubviews가 constraint를 만족시키기 위해 차례대로 호출된다. 따라서 그 다음으로 불리는 viewDidAppear에서야 constraint가 잘 세팅되어 있는다.
 
-**viewDidLoad**
-- 컨트롤러의 뷰가 메모리에 올라간 뒤에 호출된다. 뷰가 생성될 때만 호출된다.
-
-**viewWillAppear**
-- 화면에 뷰가 표시될 때마다 호출된다. 이 단계는 뷰는 정의된 바운드를 가지고 있지만 화면. 회전은 적용되지 않는다.
-
-**viewWillLayoutSubviews**
-- 뷰컨트롤러에게 그 자식뷰의 레이아웃을 조정하는 것에 대한 것을 알려주기 위해 호출된다. 이 메소드는 frame이 바뀔때마다 호출된다.
-
-**viewDidLayoutSubview**
-- 뷰가 그 자식 뷰의 레이아웃에 영향을 준 것을 뷰컨트롤러에게 알려주기 위해 호출된다. 뷰가 그 잣긱 view의 레이아웃을 바꾸고난 뒤에 추가적인 변경을 하고 싶을때 사용하는 이벤트 함수
-
-**viewDidAppear**
-- 뷰가 나타났다는 것을 컨트롤러에게 알리는 역할을 한다. 호출되는 시점으로는 뷰가 화면에 나타난 직후에 실행된다.
-
-**viewWillDisAppear**
-- 뷰가 사라지기 직전에 호출되는 함수이다. 뷰가 삭제 되려고 하고있는 것을 viewController에게 알린다.
-
-**viewDidDisappear**
-- ViewController에게 view가 제거되었음을 알린다. 호출 시점은 viewWillDisAppear 다음에 호출된다.
+### View의 레이아웃 업데이트 관련 메소드
+- setNeedsDisplay
+    - 특정 UIView의 모습을 업데이트하고 싶을 때, 다음 UIView의 업데이트 주기에서 draw(CGRect) 메서드를 통해 뷰를 다시 그려줘야 함을 시스템에 알려준다.
+- setNeedsLayout
+    - receiver(수신자)의 현재 레이아웃을 무효화하고, 다음 업데이트 주기 동안 레이아웃 업데이트를 트리거한다.
+    - layoutSubviews를 예약하는 행위 중 가장 비용이 적게 드는 방법이다. 이 메소드를 호출한 view는 재계산 되어야 하는 view라고 수동으로 체크가 되며 update cycle에서 layoutSubviews가 호출되게 됩니다.
+- layoutIfNeeded
+    - layoutIfNeeded()가 호출되면, UI를 업데이트 하라는 queue에 뒷쪽에 넣는것이 아니라, 맨 앞쪽에 넣어서 곧바로 UI가 변경되기를 기대할수있는 메소드
+    - 해당 메소드가 호출되면 Update Cycle을 바로 실행하여 레이아웃이 즉각적으로 적용
+    - layoutSubviews()는 내부 알고리즘에 의해 최적화되어 있기때문에 명시적으로 불리면 안되므로 애플에서는 layoutIfNeeds() 코드를 통해 layoutSubviews() 메소드가 간접적으로 빠르게 불리도록 설계
+- layoutSubviews
+    - view와 모든 subview들의 위치와 사이즈를 재계산하여 배치시켜준다. 따라서 이 함수는 코스트가 높다고 표현한다. 그래서 공식문서에서는 이 함수를 직접 호출할 수 없고, setNeedsLayout과 layoutIfNeeded를 통해 뷰를 갱신하라고 나와있다.
 
 ---
 
