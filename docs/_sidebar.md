@@ -45,6 +45,7 @@
     - [iOS Async/Await](iOS/AsyncAwait.md)
     - [iOS Memory Warning](iOS/MemoryWarning.md)
     - [더 좋은 메소드 작명법](iOS/BetterMethodName.md)
+    - [상속과 Composition](iOS/Composition.md)
 
 - SwiftUI
     - [SwiftUI의 State](iOS/SwiftUI_State.md)
