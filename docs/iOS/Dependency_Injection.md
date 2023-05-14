@@ -151,7 +151,7 @@ class ViewController: UIViewController {
     
     func navigationToSomeView() {
         let viewController = SomeViewController(
-            viewModel: AppDI.shared.someDependencies()
+            viewModel: AppDIContainer.shared.someDependencies()
         )
         
         self.navigationController?.pushViewController(viewController, animated: true)
