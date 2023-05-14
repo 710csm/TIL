@@ -46,6 +46,7 @@
     - [iOS Memory Warning](iOS/MemoryWarning.md)
     - [더 좋은 메소드 작명법](iOS/BetterMethodName.md)
     - [상속과 Composition](iOS/Composition.md)
+    - [Dependency Injection](iOS/Dependency_Injection.md)
 
 - SwiftUI
     - [SwiftUI의 State](iOS/SwiftUI_State.md)
@@ -67,7 +68,6 @@
     - [Then](라이브러리/Then.md)
     - [FlexLayout](라이브러리/FlexLayout.md)
     - [Moya](라이브러리/Moya.md)
-    - [Swinject](라이브러리/Swinject.md)
     - [Carte](라이브러리/Carte.md)
     - [구글 로그인](라이브러리/GoogleLogin.md)
     - [페이스북 로그인](라이브러리/FaceBookLogin.md)

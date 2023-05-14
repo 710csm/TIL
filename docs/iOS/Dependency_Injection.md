@@ -1,7 +1,6 @@
-# Swinject
+# Dependency Injection
 
-## Swinject 사용을 해야하는 이유
-### 1. 의존성이란?
+## 1. 의존성이란?
 
 ```Swift
 class someNetworkService {
@@ -24,27 +23,27 @@ let viewModel = SomViewModel()
 viewModel.viewModelFunction()
 ```
 
-위의 예제를 보면 SomeViewModel class는 SomeNetworkService clsss를 인스턴스로 가지고 있다.      
-그 이유는 viewModelFunction에서 함수를 실행할 때 dependency.fetchData를  실행하고 얻은 데이터를 통해     
-비지니스 로직에 따라 데이터를 처리하기 때문이다.
+위의 예제를 보면 SomeViewModel class는 SomeNetworkService clsss를 인스턴스로 가지고 있다.         
 
-따라서 SomeViewModel은 SomeNetworkService 없이는 함수를 실행할 수 없기 때문에 SomeNetworkService에게 의존성을 가진다.   
-의존성을 가지면 테스트가 불가능하고, 강한 결합을 가지게 된다.   
-그래서 SOLID(객체 지향 설계) ***Dependency Inversion Principle(의존관계 역전 원칙)*** 에 따라 의존관계를 역전시켜야 한다.
+그 이유는 viewModelFunction에서 함수를 실행할 때 dependency.fetchData를  실행하고 얻은 데이터를 통해 비지니스 로직에 따라 데이터를 처리하기 때문이다.
+
+따라서 SomeViewModel은 SomeNetworkService 없이는 함수를 실행할 수 없기 때문에 SomeNetworkService에게 의존성을 가진다. 의존성을 가지면 테스트가 불가능하고, 강한 결합을 가지게 된다.   
+
+그래서 SOLID(객체 지향 설계) **Dependency Inversion Principle(의존관계 역전 원칙)** 에 따라 의존관계를 역전시켜야 한다.
 
 <img width="758" alt="스크린샷 2021-06-14 오후 4 46 14" src="https://user-images.githubusercontent.com/45002556/121856940-09b65280-cd30-11eb-9f90-157cd0eed397.png">
 
-### 2. Dependency Inversion Principle(의존관계 역전 원칙)
+## 2. Dependency Inversion Principle(의존관계 역전 원칙)
 객체 지향 프로그래밍에서 의존관계 역전 원칙은 소프트웨어 모듈들을 분리하는 특정 형식을 지칭한다.    
 이 원칙을 따르면, 상위 계층이 하위 계층에 의존하는 전통적인 의존관계를 반전시킴으로써 상위 계층이 하위 계층의 구현으로부터 독립되게 할 수 있다.    
-이 원칙은 다음과 같은 내용을 담고 있다.
 
+이 원칙은 다음과 같은 내용을 담고 있다.
 1. 상위 모듈은 하위 모듈에 의존해서는 안된다. 상위 모듈과 하위 모듈 모두 추상화에 의존해야 한다.
 2. 추상화는 세부 사항에 의존해서는 안된다. 세부사항이 추상화에 의존해야 한다.
 
 이 원칙은 상위와 하위 객체 모두가 동일한 추상화에 의존해야 한다는 객체 지향적 설계의 대원칙을 제공한다.
 
-### 3. Inversion of control(제어의 역전)
+## 3. Inversion of control(제어의 역전)
 지금 SomeNetworkService는 추상화 되어있지 않고 세부사항은 추상화에 의존해야하는데 이 원칙을 지키고 있지 않다.    
 따라서 다음과 같이 SomeNetworkService를 추상화 한다.
 
@@ -88,8 +87,8 @@ dependency.fetchData에만 접근할 수 있게 됐다.
 위와같이 제어의 주체가 바뀌었다. 하지만 테스트가 가능해지거나 강한 결합이 느슨해지지는 않느다.     
 아직도 의존성은 SomeViewModel에 존재한다. 따라서 외부에서 의존성을 주입시키는 방법을 써야한다.
 
-### 4. Dependency Injection
-#### 장점
+## 4. Dependency Injection
+### 장점
 1. 테스트에 용이함
 2. 재사용성을 높여줌
 3. 코드의 단순화
@@ -104,7 +103,63 @@ dependency.fetchData에만 접근할 수 있게 됐다.
 
 <img width="688" alt="스크린샷 2021-06-14 오후 5 03 17" src="https://user-images.githubusercontent.com/45002556/121859234-6d417f80-cd32-11eb-958a-fe4cf03b141f.png">
 
-## 설치방법
+## Dependency Container를 사용한 예시
+
+```Swift
+
+// Dependency Container로 특정 뷰 컨트롤러에서 사용할 view model을 만들어 준다
+class AppDIContainer {
+    static let shared = AppDIContainer()
+    
+    func someDependencies() -> SomeViewModelProtocol {
+        return SomeViewModel(service: API()) as SomeViewModelProtocol
+    }
+}
+
+// 앱의 API 서비스를 처리해주는 class
+final class API: APIProtocol {
+    private let baseURL: String = "http://example.com"
+    
+    enum Path: String {
+        case appInit = "/api/~"
+    }
+    
+    init() { }
+    
+    func requestSomeThing() -> Response {
+        return Response()
+    }
+}
+
+// 어떤 뷰의 view model로 init 할 때 service가 필요
+final class SomeViewModel: SomeViewModelProtocol {
+    let disposeBag: DisposeBag = DisposeBag()
+    let service: API
+    
+    init(service: APIProtocol) {
+        self.service = service
+    }
+}
+
+class ViewController: UIViewController {
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationToLogin()
+    }
+    
+    func navigationToSomeView() {
+        let viewController = SomeViewController(
+            viewModel: AppDI.shared.someDependencies()
+        )
+        
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+```
+## Swinject
+### 설치방법
 1. Carthage
 
 ```
@@ -125,7 +180,7 @@ pod 'Swinject'
 pod install
 ```
 
-## 기본 사용법
+### 기본 사용법
 - 정의된 protocol과 class
 
 ```Swift
@@ -177,7 +232,7 @@ let person = container.resolve(Person.self)!
 person.play() // prints "I'm playing with Mimi."
 ```
 
-## Services들을 register 할 곳
+### Services들을 register 할 곳
 - Services들은 무조건 사용되기 전에 컨테이너에 등록되어야 한다. 등록 방법은 SwinjectStoryboard를 사용하냐에 따라 결정된다.
 
 ### With SwinjectStoryboard
@@ -246,9 +301,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 ```
 
-## Swinject git 주소
+### Swinject git 주소
 https://github.com/Swinject/Swinject
-
 
 ## 참고
 1. https://velog.io/@hansangjin96/Swinject-%EC%9D%98%EC%A1%B4%EC%84%B1-%EA%B4%80%EB%A6%AC%EB%9E%80
