@@ -13,7 +13,7 @@
 ### 강한 순환 참조
 - 강한 순환 참조(Strong Reference Cycle)는 객체 간에 서로 참조하는 경우 발생할 수 있는 메모리 누수(Memory Leak)의 일종입니다. 이것은 iOS 개발에서 발생할 수 있는 일반적인 문제 중 하나입니다.
 
-- 강한 순환 참조는 객체 간에 서로가 참조하는 경우 발생합니다. 예를 들어, 클래스 A와 클래스 B가 각각 서로의 인스턴스를 참조하고 있을 때, A의 인스턴스가 B를 참조하고, B의 인스턴스가 다시 A를 참조하면 강한 순회ㅏㄴ 참조가 발생합니다. 이러한 경우 객체는 더 이상 필요하지 않더라도 해제되지 않고 계속해서 메모리를 점유하게 됩니다.
+- 강한 순환 참조는 객체 간에 서로가 참조하는 경우 발생합니다. 예를 들어, 클래스 A와 클래스 B가 각각 서로의 인스턴스를 참조하고 있을 때, A의 인스턴스가 B를 참조하고, B의 인스턴스가 다시 A를 참조하면 강한 순환 참조가 발생합니다. 이러한 경우 객체는 더 이상 필요하지 않더라도 해제되지 않고 계속해서 메모리를 점유하게 됩니다.
 
 - 이러한 문제를 해결하기 위해 iOS에서는 강한 참조 대신 약한 참조(Weak Reference)를 사용하도록 권장합니다. 약한 참조는 참조하고 있는 객체를 강제로 해제하지 않고, 참조하고 있는 객체가 해제되면 자동으로 nil 값을 가지도록 합니다. 이렇게 함으로써 순환 참조로 인한 메모리 누수를 방지할 수 있습니다.
 
@@ -23,6 +23,81 @@
 1. weak 참조나 unowned 참조를 사용하여 순환 참조를 방지합니다.
 2. Closure 내부에서 self를 사용할 때 [weak self] 또는 [unowned self]를 사용하여 순환 참조를 방지합니다.
 3. iOS에서는 자동으로 ARC를 사용하여 메모리를 관리합니다. ARC를 적절하게 사용하면 순환 참조 문제를 방지할 수 있습니다.   
+
+```Swift
+class Person {
+    var name: String
+    var pet: Pet?
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    deinit {
+        print("\(name) 객체가 해제되었습니다.")
+    }
+}
+
+class Pet {
+    var name: String
+    var owner: Person?
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    deinit {
+        print("\(name) 객체가 해제되었습니다.")
+    }
+}
+
+var john: Person? = Person(name: "John")
+var dog: Pet? = Pet(name: "Buddy")
+
+john?.pet = dog
+dog?.owner = john
+
+john = nil
+dog = nil
+```
+
+강한 순환 참조는 iOS 앱의 성능에 영향을 미칠 수 있으며, 메모리 누수의 원인이 될 수 있습니다. 이를 해결하기 위해서는, 아래와 같이  객체 간의 참조 관계를 약한 참조(Weak Reference)나 비소유 참조(Unowned Reference)로 변경하면 됩니다.
+
+```Swift
+class Person {
+    var name: String
+    weak var pet: Pet?
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    deinit {
+        print("\(name) 객체가 해제되었습니다.")
+    }
+}
+
+class Pet {
+    var name: String
+    unowned var owner: Person
+    
+    init(name: String, owner: Person) {
+        self.name = name
+        self.owner = owner
+    }
+    
+    deinit {
+        print("\(name) 객체가 해제되었습니다.")
+    }
+}
+
+var john: Person? = Person(name: "John")
+var dog: Pet? = Pet(name: "Buddy", owner: john!)
+
+john?.pet = dog
+dog = nil
+john = nil
+```
 
 ---
 
