@@ -294,6 +294,79 @@ bind(onNext)는 에러를 emit하지 않고 item event에 관해서만 emit하�
 
 ---
 
+# Operator
+- Operator는 Observables에 적용할 수 있는 변환 함수들을 의미합니다. Operator를 이용하여 Observables를 조작하면서 데이터를 처리하고 변환할 수 있습니다.
+
+## Operator의 종류
+
+### Transforming Operators
+- Observable을 다른 Observable로 변환하는 함수로, map, flatMap, concatMap, scan 등이 있습니다.
+    - startWith: Observable 시퀀스 앞에 다른 값을 추가해주는 기능을 합니다.
+    - concat: startWith와 매우 흡사한 것으로, startWith는 하나의 element가 맨 앞에 추가되지만 concat은 여러개의 element가 추가됩니다.
+    - concatMap: flatMap과 concat이 합쳐진 것으로 flatMap과 다른점은 concatMap은 순서를 보장해줍니다.
+    - flatMap: map과는 다르게 스트림에서 방출되는 아이템들을 다른 Observable로 만드는 역할을 하며 각각 만들어진 Observable 또한 아이템을 방출하게 됩니다.
+    
+    ```Swift
+    let sequenceInt = Observable.of(1, 2, 3)    // Int 타입 시퀀스
+    let sequenceString = Observable.of("A", "B", "C", "D")    // String 타입 시퀀스
+
+    sequenceInt
+        .flatMap { (x: Int) -> Observable<String> in
+            print("Emit Int Item : \(x)")
+            return sequenceString.map{ "\(x):\($0)"}
+        }
+        .subscribe(onNext: {
+            self.arr.append($0)
+        })
+
+    print(arr)
+
+    // Print
+    Emit Int Item : 1
+    Emit Int Item : 2
+    Emit Int Item : 3
+    ["1:A", "1:B", "2:A", "1:C", "2:B", "3:A", "1:D", "2:C", "3:B", "2:D", "3:C", "3:D"]
+    ```
+    
+    - flatMap을 통해 변환되는 각각 Observable들을 평평하게 flat한 스트림을 생성하여 방출합니다.
+    
+    <img width="723" alt="스크린샷 2023-05-15 오전 10 27 22" src="https://github.com/710csm/TIL/assets/45002556/59ff70da-0a83-4d7a-8407-ee7cb1b52cf8">
+
+### Filtering Operators
+- Observable에서 특정 조건을 만족하는 항목만 걸러내는 함수로, filter, take, skip, distinctUntilChanged 등이 있습니다.
+
+### Combining Operators 
+- 두 개 이상의 Observable을 조합하는 함수로, merge, zip, combineLatest 등이 있습니다.
+    - combineLatest: 최소 두개의 스트림에서 각각 하나씩 이벤트를 받아온 뒤부터 두개의 스트림 중 한쪽에서만 이벤트가 발생해도 새로운 스트림에 이벤트를 받아올 수 있습니다.
+    
+    <img width="510" alt="스크린샷 2023-05-15 오전 9 51 47" src="https://github.com/710csm/TIL/assets/45002556/2d68eea9-49a7-4526-a9e4-8ecb8000fb28">
+    
+    - merge: 두개의 Observable을 합쳐주는 연산자로 스트림을 합쳐서 하나의 스트림으로 만들어 줍니다. Observable의 이벤트가 모두 들어올 때까지 기다리지 않고 바로바로 하나씩 방출해줍니다. 연산자는 각 스트림의 이벤트에 접근할 수 없고 그냥 바로 반환되고 새로운 스트림을 만들어준다.
+    
+    <img width="465" alt="스크린샷 2023-05-15 오전 9 52 26" src="https://github.com/710csm/TIL/assets/45002556/6743bc96-ecda-45b1-b732-dae706dad604">
+
+    - zip: combineLatest와 비슷하지만 다른 개념으로 combineLatest는 각 스트림에서 이벤트가 발생하면 바로 새로운 이벤트가 내려왔지만 zip은 모든 스트림에서 같은 횟수의 이벤트가 들어올 때 실행됩니다.
+    
+    <img width="495" alt="스크린샷 2023-05-15 오전 9 53 53" src="https://github.com/710csm/TIL/assets/45002556/9cb03e8f-bf65-4392-a3aa-1ff842c472f1">
+    
+    - witLatestFrom: combineLatest와 비슷한 것으로 새로운 이벤트가 발생한 스트림에서 지정한 스트림의 가장 최신의 아이템을 얻을 수 있다는 접입니다.
+    
+    <img width="745" alt="스크린샷 2023-05-15 오전 10 31 07" src="https://github.com/710csm/TIL/assets/45002556/f2124760-0d8a-4912-a0f1-8c07c6fd6f4a">      
+
+### Error Handling Operators
+- 에러를 처리하는 함수로, catchError, retry 등이 있습니다.
+    - catchError: 에러가 발생 됐을 때 onError로 종료되지 않도록 하고, 이벤트를 발생하고 onComplete 될 수 있도록 합니다.
+    - catchErrorJustReturn: 에러가 발생 했을 때 설정해둔 단일 이벤트를 전달하도록 하는 연산자입니다. subscribe에서 에러를 감지 하는 것이 아닌, Observable에서 에러에 대한 기본 이벤트를 설정하는 것 입니다.
+    - retry: 에러가 발생 했을 때 성공을 기대하며 Observable을 다시 시도하는 연산자입니다. 재시도 횟수를 지정해 에러를 처리하고 다시한번 수행하도록 합니다.
+    - retryWhen: retry 하는 시점을 지정할 수 있습니다. 재시도는 한번만 수행됩니다. 
+
+### Utility Operators
+- Observable의 동작을 조작하는 함수로, delay, do, materialize, subscribeOn 등이 있습니다.
+
+RxSwift의 Operator는 이 외에도 다양한 종류가 있습니다. 이러한 Operator들을 적절히 활용하여 Observable의 데이터를 원하는 대로 처리할 수 있습니다. 하지만 Operator를 과도하게 사용하면 코드가 복잡해질 수 있으므로, 필요한 경우에만 사용하는 것이 좋습니다.
+
+---
+
 # Subject
 - 실제 앱 구동시(run time) Observable에 값을 추가하여 emit이 발생하게끔 해주는 대리인
 - Observable에 값을 추가하는 대상은 Observer라 부르며 Observable과 Observer 기능을 둘 다 하는것이 바로 Subject(subscriber가 아님을 주의)
