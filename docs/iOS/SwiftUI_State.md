@@ -14,7 +14,7 @@ struct ContentView: View {
 ```
 
 - view들은 struct이고 이는 view가 바뀔 수 없다는 것을 의미한다. 하지만 @State는 해당 프로퍼티의 값이 앞으로 계속해서 바뀔 수 있음을 의미한다.
-- @State를 사용하여 SwiftUI가 해당 메모리를 관리하도록 하고 있다. 프로퍼티에 @State를 명시하는 것은 해당 프로퍼티가 해당 view가 없어지기 전까지 메모리에서 영원히 존재할 수 있도록 프로퍼티에 대한 통제권을 SwiftUI애개 념겨주는 것이다.
+- @State를 사용하여 SwiftUI가 해당 메모리를 관리하도록 하고 있다. 프로퍼티에 @State를 명시하는 것은 해당 프로퍼티가 해당 view가 없어지기 전까지 메모리에서 영원히 존재할 수 있도록 프로퍼티에 대한 통제권을 SwiftUI에게 념겨주는 것이다.
 - state가 변경이 되면 SwiftUI는 view가 state의 정보를 반영할 수 있도록 자동으로 최신 변경사항을 반영하여 view를 reload한다.
 - 특정 뷰에 종속하는 단순 프로퍼티와 외부에서 절대 사용되지 않는 프로퍼티에 적합하다. 따라서 @State 프로퍼티에는 private 접근 제한자를 사용함으로써 state들이 해당 뷰의 밖으로 나가지 못하도록 고안되어있다
 - @State private var classInstance = referenceTypeObject() -> 불가, 클래스의 인스턴스를 값으로 사용하려면 @ObservedObject를 사용해야 한다.  
