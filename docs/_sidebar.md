@@ -48,6 +48,7 @@
     - [더 좋은 메소드 작명법](iOS/BetterMethodName.md)
     - [상속과 Composition](iOS/Composition.md)
     - [Dependency Injection](iOS/Dependency_Injection.md)
+    - [#Preview](iOS/preview.md)
 
 - SwiftUI
     - [SwiftUI의 State](iOS/SwiftUI_State.md)
